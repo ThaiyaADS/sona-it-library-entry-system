@@ -19,23 +19,41 @@ export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Protect Admin Routes
-  if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
-    if (!user || user.role !== "ADMIN") {
-      return NextResponse.redirect(new URL("/admin/login", request.url));
+  if (pathname.startsWith("/admin")) {
+    if (pathname === "/admin" || pathname === "/admin/login") {
+      if (user && user.role === "ADMIN") {
+        return NextResponse.redirect(new URL("/admin/dashboard", request.url));
+      }
+    } else {
+      if (!user || user.role !== "ADMIN") {
+        return NextResponse.redirect(new URL("/admin/login", request.url));
+      }
     }
   }
 
   // Protect Student Routes
-  if (pathname.startsWith("/student") && pathname !== "/student/login") {
-    if (!user || user.role !== "STUDENT") {
-      return NextResponse.redirect(new URL("/student/login", request.url));
+  if (pathname.startsWith("/student")) {
+    if (pathname === "/student/login") {
+      if (user && user.role === "STUDENT") {
+        return NextResponse.redirect(new URL("/student/dashboard", request.url));
+      }
+    } else {
+      if (!user || user.role !== "STUDENT") {
+        return NextResponse.redirect(new URL("/student/login", request.url));
+      }
     }
   }
 
   // Protect Faculty Routes
-  if (pathname.startsWith("/faculty") && pathname !== "/faculty/login") {
-    if (!user || user.role !== "FACULTY") {
-      return NextResponse.redirect(new URL("/faculty/login", request.url));
+  if (pathname.startsWith("/faculty")) {
+    if (pathname === "/faculty/login") {
+      if (user && user.role === "FACULTY") {
+        return NextResponse.redirect(new URL("/faculty/dashboard", request.url));
+      }
+    } else {
+      if (!user || user.role !== "FACULTY") {
+        return NextResponse.redirect(new URL("/faculty/login", request.url));
+      }
     }
   }
 
