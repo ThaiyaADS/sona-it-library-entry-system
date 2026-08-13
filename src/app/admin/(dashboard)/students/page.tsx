@@ -3,10 +3,9 @@ import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import CsvUploader from "@/components/CsvUploader";
 import UserFormModal from "@/components/UserFormModal";
-import ToggleUserButton from "@/components/ToggleUserButton";
+import DeleteUserButton from "@/components/DeleteUserButton";
 
 export const metadata = {
   title: "Student Management - Sona IT Library",
@@ -47,27 +46,21 @@ export default async function AdminStudents() {
                     <th className="px-6 py-4">Admission Number</th>
                     <th className="px-6 py-4">Department</th>
                     <th className="px-6 py-4">Course & Year</th>
-                    <th className="px-6 py-4">Status</th>
                     <th className="px-6 py-4 text-right">Actions</th>
                  </tr>
               </thead>
               <tbody>
                  {students.map((student) => (
-                    <tr key={student.id} className={`border-b hover:bg-slate-50 ${!student.isActive ? 'opacity-60' : ''}`}>
+                    <tr key={student.id} className="border-b hover:bg-slate-50">
                        <td className="px-6 py-4 font-bold text-slate-900">{student.name}</td>
                        <td className="px-6 py-4 font-mono text-slate-600">{student.identifier}</td>
                        <td className="px-6 py-4 text-slate-600">{student.department}</td>
                        <td className="px-6 py-4 text-slate-600">
                           {student.course} - Year {student.year}
                        </td>
-                       <td className="px-6 py-4">
-                          <Badge variant={student.isActive ? 'default' : 'destructive'} className={student.isActive ? 'bg-green-100 text-green-800 hover:bg-green-100' : ''}>
-                             {student.isActive ? 'Active' : 'Inactive'}
-                          </Badge>
-                       </td>
                        <td className="px-6 py-4 text-right flex justify-end gap-1">
                           <UserFormModal type="STUDENT" mode="EDIT" initialData={student} />
-                          <ToggleUserButton id={student.id} isActive={student.isActive} role="STUDENT" />
+                          <DeleteUserButton id={student.id} name={student.name} role="STUDENT" />
                        </td>
                     </tr>
                  ))}

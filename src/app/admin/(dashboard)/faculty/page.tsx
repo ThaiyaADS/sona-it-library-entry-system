@@ -3,10 +3,9 @@ import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import CsvUploader from "@/components/CsvUploader";
 import UserFormModal from "@/components/UserFormModal";
-import ToggleUserButton from "@/components/ToggleUserButton";
+import DeleteUserButton from "@/components/DeleteUserButton";
 
 export const metadata = {
   title: "Faculty Management - Sona IT Library",
@@ -47,25 +46,19 @@ export default async function AdminFaculty() {
                     <th className="px-6 py-4">Faculty ID</th>
                     <th className="px-6 py-4">Department</th>
                     <th className="px-6 py-4">Designation</th>
-                    <th className="px-6 py-4">Status</th>
                     <th className="px-6 py-4 text-right">Actions</th>
                  </tr>
               </thead>
               <tbody>
                  {facultyMembers.map((faculty) => (
-                    <tr key={faculty.id} className={`border-b hover:bg-slate-50 ${!faculty.isActive ? 'opacity-60' : ''}`}>
+                    <tr key={faculty.id} className="border-b hover:bg-slate-50">
                        <td className="px-6 py-4 font-bold text-slate-900">{faculty.name}</td>
                        <td className="px-6 py-4 font-mono text-slate-600">{faculty.identifier}</td>
                        <td className="px-6 py-4 text-slate-600">{faculty.department}</td>
                        <td className="px-6 py-4 text-slate-600">{faculty.designation}</td>
-                       <td className="px-6 py-4">
-                          <Badge variant={faculty.isActive ? 'default' : 'destructive'} className={faculty.isActive ? 'bg-green-100 text-green-800 hover:bg-green-100' : ''}>
-                             {faculty.isActive ? 'Active' : 'Inactive'}
-                          </Badge>
-                       </td>
                        <td className="px-6 py-4 text-right flex justify-end gap-1">
                           <UserFormModal type="FACULTY" mode="EDIT" initialData={faculty} />
-                          <ToggleUserButton id={faculty.id} isActive={faculty.isActive} role="FACULTY" />
+                          <DeleteUserButton id={faculty.id} name={faculty.name} role="FACULTY" />
                        </td>
                     </tr>
                  ))}

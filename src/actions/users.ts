@@ -103,3 +103,29 @@ export async function toggleUserStatus(id: string, currentStatus: boolean, role:
     return { success: false, message: "Failed to change user status." };
   }
 }
+
+export async function deleteUser(id: string, role: "STUDENT" | "FACULTY") {
+  const session = await getSession();
+  if (!session || session.user.role !== "ADMIN") {
+    return { success: false, message: "Unauthorized" };
+  }
+
+  try {
+    // Delete visits first to satisfy foreign key constraints
+    await prisma.libraryVisit.deleteMany({
+      where: { userId: id }
+    });
+
+    // Delete the user record
+    await prisma.user.delete({
+      where: { id }
+    });
+
+    const path = role === "STUDENT" ? "/admin/students" : "/admin/faculty";
+    revalidatePath(path);
+    return { success: true, message: "User deleted successfully." };
+  } catch (error) {
+    console.error("Delete user error:", error);
+    return { success: false, message: "Failed to delete user." };
+  }
+}
