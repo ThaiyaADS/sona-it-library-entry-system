@@ -80,36 +80,83 @@ export default function UserFormModal({ type, mode, initialData }: UserFormModal
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="grid gap-2">
             <Label htmlFor="identifier">{isStudent ? "Admission Number" : "Faculty ID"} *</Label>
-            <Input id="identifier" name="identifier" defaultValue={initialData?.identifier} required />
+            <Input 
+              id="identifier" 
+              name="identifier" 
+              defaultValue={initialData?.identifier} 
+              placeholder={isStudent ? "e.g. 23ADSBE179" : "e.g. FAC123"}
+              required 
+            />
           </div>
+
+          {isStudent && (
+            <div className="grid gap-2">
+              <Label htmlFor="registerNumber">Register Number</Label>
+              <Input 
+                id="registerNumber" 
+                name="registerNumber" 
+                defaultValue={initialData?.registerNumber} 
+                placeholder="e.g. 61782323110789"
+              />
+            </div>
+          )}
           
           <div className="grid gap-2">
             <Label htmlFor="name">Full Name *</Label>
-            <Input id="name" name="name" defaultValue={initialData?.name} required />
+            <Input id="name" name="name" defaultValue={initialData?.name} placeholder="e.g. John Doe" required />
           </div>
           
           <div className="grid gap-2">
             <Label htmlFor="department">Department *</Label>
-            <Input id="department" name="department" defaultValue={initialData?.department} required />
+            <select 
+              id="department" 
+              name="department" 
+              defaultValue={initialData?.department || "IT"} 
+              required
+              className="flex h-9 w-full rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
+            >
+              <option value="IT">IT</option>
+              <option value="ADS">ADS</option>
+            </select>
           </div>
 
           {isStudent ? (
-            <>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="course">Course (e.g. B.Tech)</Label>
-                  <Input id="course" name="course" defaultValue={initialData?.course} />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="year">Year (e.g. I, II, III, IV)</Label>
-                  <Input id="year" name="year" defaultValue={initialData?.year} />
-                </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="year">Year *</Label>
+                <select 
+                  id="year" 
+                  name="year" 
+                  defaultValue={initialData?.year || "I"} 
+                  required
+                  className="flex h-9 w-full rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
+                >
+                  <option value="I">I</option>
+                  <option value="II">II</option>
+                  <option value="III">III</option>
+                  <option value="IV">IV</option>
+                </select>
               </div>
-            </>
+              
+              <div className="grid gap-2">
+                <Label htmlFor="section">Section *</Label>
+                <select 
+                  id="section" 
+                  name="section" 
+                  defaultValue={initialData?.section || "A"} 
+                  required
+                  className="flex h-9 w-full rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
+                >
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                </select>
+              </div>
+            </div>
           ) : (
             <div className="grid gap-2">
               <Label htmlFor="designation">Designation</Label>
-              <Input id="designation" name="designation" defaultValue={initialData?.designation} />
+              <Input id="designation" name="designation" defaultValue={initialData?.designation} placeholder="e.g. Assistant Professor" />
             </div>
           )}
 

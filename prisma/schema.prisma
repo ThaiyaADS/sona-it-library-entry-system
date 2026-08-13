@@ -14,6 +14,7 @@ model User {
   name            String
   department      String
   course          String?        // B.Tech, M.Tech (Students only)
+  registerNumber  String?        // Register Number (Students only)
   year            String?        // I, II, III, IV (Students only)
   section         String?        // A, B, C (Students only)
   designation     String?        // Assistant Professor, etc. (Faculty only)
