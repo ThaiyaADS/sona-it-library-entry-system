@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, User, Loader2, XCircle } from "lucide-react";
 import { format } from "date-fns";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function ScannerInterface({ initialScans }: { initialScans: any[] }) {
   const [barcode, setBarcode] = useState("");
@@ -84,8 +86,20 @@ export default function ScannerInterface({ initialScans }: { initialScans: any[]
   };
 
   return (
-    <div className="max-w-4xl mx-auto mt-8 p-4">
-      <div className="text-center mb-8">
+    <div className="max-w-4xl mx-auto mt-8 p-4 relative">
+      <div className="absolute top-0 left-4">
+        <Link href="/admin" className="text-sm text-slate-500 hover:text-slate-800 flex items-center gap-1 font-semibold transition-colors">
+          &larr; Back to Admin
+        </Link>
+      </div>
+      <div className="text-center mb-8 flex flex-col items-center">
+        <Image 
+          src="/logo.png" 
+          alt="Sona College Logo" 
+          width={180} 
+          height={60} 
+          className="object-contain bg-white p-2 rounded-md shadow-sm border border-slate-200 mb-4" 
+        />
         <h1 className="text-4xl font-bold text-slate-900 tracking-tight">LIBRARY SCANNER</h1>
         <p className="text-slate-500 mt-2 text-lg">Scan barcode to record entry or exit</p>
         <div className="mt-4 text-2xl font-mono bg-slate-100 py-2 px-6 rounded-full inline-block text-slate-800">
