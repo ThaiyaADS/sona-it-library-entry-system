@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String         @id @default(uuid())
+  role            String         // STUDENT, FACULTY, ADMIN
+  identifier      String         @unique // Admission Number or Faculty ID
+  name            String
+  department      String
+  course          String?        // B.Tech, M.Tech (Students only)
+  year            String?        // I, II, III, IV (Students only)
+  section         String?        // A, B, C (Students only)
+  designation     String?        // Assistant Professor, etc. (Faculty only)
+  email           String?
+  phone           String?
+  barcode         String         @unique
+  passwordHash    String
+  isActive        Boolean        @default(true)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  visits          LibraryVisit[]
+}
+
+model LibraryVisit {
+  id              String       @id @default(uuid())
+  userId          String
+  user            User         @relation(fields: [userId], references: [id])
+  entryTime       DateTime     @default(now())
+  exitTime        DateTime?
+  durationMinutes Int?
+  status          String       @default("INSIDE") // INSIDE, COMPLETED
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+}
+
+model Admin {
+  id              String       @id @default(uuid())
+  username        String       @unique
+  email           String?
+  passwordHash    String
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+}
