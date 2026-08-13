@@ -15,9 +15,18 @@ interface LoginFormProps {
   identifierName: string;
   action: (formData: FormData) => Promise<any>;
   homeLink?: boolean;
+  hidePassword?: boolean;
 }
 
-export default function LoginForm({ title, description, identifierLabel, identifierName, action, homeLink = true }: LoginFormProps) {
+export default function LoginForm({ 
+  title, 
+  description, 
+  identifierLabel, 
+  identifierName, 
+  action, 
+  homeLink = true,
+  hidePassword = false
+}: LoginFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,6 +35,12 @@ export default function LoginForm({ title, description, identifierLabel, identif
     setIsLoading(true);
     setError(null);
     const formData = new FormData(e.currentTarget);
+    
+    if (hidePassword) {
+      const identifierVal = formData.get(identifierName) as string;
+      formData.set("password", identifierVal);
+    }
+    
     const result = await action(formData);
     
     if (result?.error) {
@@ -52,23 +67,25 @@ export default function LoginForm({ title, description, identifierLabel, identif
               className="h-12 border-slate-300 focus-visible:ring-slate-900 bg-slate-50" 
             />
           </div>
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-               <Label htmlFor="password" className="text-slate-700 font-semibold">Password</Label>
-               {title !== "Admin Login" && (
-                  <Link href="#" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">
-                     Forgot password?
-                  </Link>
-               )}
+          {!hidePassword && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                 <Label htmlFor="password" className="text-slate-700 font-semibold">Password</Label>
+                 {title !== "Admin Login" && (
+                    <Link href="#" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">
+                       Forgot password?
+                    </Link>
+                 )}
+              </div>
+              <Input 
+                id="password" 
+                name="password" 
+                type="password" 
+                required 
+                className="h-12 border-slate-300 focus-visible:ring-slate-900 bg-slate-50" 
+              />
             </div>
-            <Input 
-              id="password" 
-              name="password" 
-              type="password" 
-              required 
-              className="h-12 border-slate-300 focus-visible:ring-slate-900 bg-slate-50" 
-            />
-          </div>
+          )}
           
           {error && (
             <div className="p-3 bg-red-50 border border-red-200 text-red-600 rounded-md text-sm font-medium">

@@ -19,6 +19,7 @@ export default function StudentLoginPage() {
         identifierLabel="Admission Number"
         identifierName="identifier"
         action={loginAction}
+        hidePassword={true}
       />
     </div>
   );
