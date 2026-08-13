@@ -21,9 +21,10 @@ export async function uploadStudentsCSV(data: { rows: any[] }) {
       const identifier = row.identifier.toString().trim();
       const barcode = row.barcode ? row.barcode.toString().trim() : identifier;
       
-      // Default password is their identifier
-      const defaultPassword = row.password ? row.password.toString() : identifier;
+      // Default password is their Admission Number (identifier)
+      const defaultPassword = identifier;
       const passwordHash = await bcrypt.hash(defaultPassword, 10);
+      const registerNumber = (row.registerNumber || row.register_number || "").toString().trim() || null;
 
       await prisma.user.upsert({
         where: { identifier },
@@ -31,6 +32,7 @@ export async function uploadStudentsCSV(data: { rows: any[] }) {
            name: row.name,
            department: row.department || "Unknown",
            course: row.course || null,
+           registerNumber: registerNumber,
            year: row.year || null,
            section: row.section || null,
            email: row.email || null,
@@ -44,6 +46,7 @@ export async function uploadStudentsCSV(data: { rows: any[] }) {
           name: row.name,
           department: row.department || "Unknown",
           course: row.course || null,
+          registerNumber: registerNumber,
           year: row.year || null,
           section: row.section || null,
           email: row.email || null,

@@ -72,8 +72,8 @@ export default function CsvUploader({ type }: CsvUploaderProps) {
   };
 
   const templateCsv = type === "STUDENT"
-    ? "identifier,name,department,course,year,section,barcode\n23ADSBE179,THAIYANANTH V S,AI & DS,B.Tech,IV,A,23ADSBE179"
-    : "identifier,name,department,designation,barcode\nFAC-IT-001,Dr. Y. Suresh,Information Technology,Assistant Professor,FAC-IT-001";
+    ? "identifier,name,department,registerNumber,year,section,barcode\n23ADSBE179,THAIYANANTH V S,ADS,61782323110789,IV,A,23ADSBE179"
+    : "identifier,name,department,designation,barcode\nFAC-IT-001,Dr. Y. Suresh,IT,Assistant Professor,FAC-IT-001";
 
   const downloadTemplate = () => {
     const blob = new Blob([templateCsv], { type: "text/csv;charset=utf-8;" });
