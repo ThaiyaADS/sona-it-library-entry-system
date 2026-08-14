@@ -3,6 +3,15 @@
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
 
+const getStartOfWeek = () => {
+  const today = new Date();
+  const day = today.getDay(); // 0 is Sunday, 1 is Monday, etc.
+  const diff = today.getDate() - day + (day === 0 ? -6 : 1);
+  const monday = new Date(today.setDate(diff));
+  monday.setHours(0, 0, 0, 0);
+  return monday;
+};
+
 export async function getStudentDashboardData() {
   const session = await getSession();
   if (!session || session.user.role !== "STUDENT") {
@@ -36,11 +45,33 @@ export async function getStudentDashboardData() {
     where: { userId: user.id, exitTime: null }
   });
 
+  const startOfWeek = getStartOfWeek();
+  const weeklyVisits = await prisma.libraryVisit.findMany({
+    where: {
+      userId: user.id,
+      entryTime: { gte: startOfWeek }
+    },
+    select: { entryTime: true }
+  });
+
+  const checkinDays = weeklyVisits.map(v => {
+    const day = new Date(v.entryTime).getDay();
+    return day === 0 ? 6 : day - 1; // 0 for Mon, 1 for Tue, etc.
+  });
+  const uniqueDays = Array.from(new Set(checkinDays));
+
+  const completedVisits = allVisits.filter(v => v.durationMinutes !== null && v.durationMinutes > 0);
+  const avgDurationMinutes = completedVisits.length > 0
+    ? Math.round(completedVisits.reduce((acc, v) => acc + (v.durationMinutes || 0), 0) / completedVisits.length)
+    : 0;
+
   return {
     user,
     stats: {
       totalVisits,
-      totalMinutes
+      totalMinutes,
+      avgDurationMinutes,
+      uniqueDays
     },
     currentVisit
   };
@@ -79,11 +110,33 @@ export async function getFacultyDashboardData() {
     where: { userId: user.id, exitTime: null }
   });
 
+  const startOfWeek = getStartOfWeek();
+  const weeklyVisits = await prisma.libraryVisit.findMany({
+    where: {
+      userId: user.id,
+      entryTime: { gte: startOfWeek }
+    },
+    select: { entryTime: true }
+  });
+
+  const checkinDays = weeklyVisits.map(v => {
+    const day = new Date(v.entryTime).getDay();
+    return day === 0 ? 6 : day - 1;
+  });
+  const uniqueDays = Array.from(new Set(checkinDays));
+
+  const completedVisits = allVisits.filter(v => v.durationMinutes !== null && v.durationMinutes > 0);
+  const avgDurationMinutes = completedVisits.length > 0
+    ? Math.round(completedVisits.reduce((acc, v) => acc + (v.durationMinutes || 0), 0) / completedVisits.length)
+    : 0;
+
   return {
     user,
     stats: {
       totalVisits,
-      totalMinutes
+      totalMinutes,
+      avgDurationMinutes,
+      uniqueDays
     },
     currentVisit
   };
@@ -137,6 +190,21 @@ export async function getAdminDashboardData() {
      }
   });
 
+  const visitsToday = await prisma.libraryVisit.findMany({
+     where: { entryTime: { gte: today } },
+     select: { entryTime: true }
+  });
+
+  const hourlyStats = Array.from({ length: 12 }, (_, i) => {
+     const hour = i + 8; // 8 AM to 7 PM
+     const count = visitsToday.filter(v => {
+        const entryHour = new Date(v.entryTime).getHours();
+        return entryHour === hour;
+     }).length;
+     const displayHour = hour > 12 ? `${hour - 12} PM` : hour === 12 ? "12 PM" : `${hour} AM`;
+     return { label: displayHour, count };
+  });
+
   return {
     stats: {
       totalStudents,
@@ -146,7 +214,8 @@ export async function getAdminDashboardData() {
       completedToday,
       totalMinutesToday
     },
-    liveUsers
+    liveUsers,
+    hourlyStats
   };
 }
 

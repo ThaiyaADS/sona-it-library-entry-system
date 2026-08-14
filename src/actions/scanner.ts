@@ -58,6 +58,13 @@ export async function processScan(barcode: string): Promise<ScanResult> {
     });
 
     const now = new Date();
+    const istTimeStr = now.toLocaleTimeString("en-US", {
+      timeZone: "Asia/Kolkata",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true
+    });
 
     if (activeVisit) {
       // 3. EXIT Logic
@@ -92,7 +99,7 @@ export async function processScan(barcode: string): Promise<ScanResult> {
       
       return {
         success: true,
-        message: `Goodbye, ${user.name}! Checked out at ${format(now, "hh:mm:ss a")}. Spent: ${durationStr}`,
+        message: `Goodbye, ${user.name}! Checked out at ${istTimeStr}. Spent: ${durationStr}`,
         type: "EXIT",
         user: {
           name: user.name,
@@ -138,7 +145,7 @@ export async function processScan(barcode: string): Promise<ScanResult> {
 
       return {
         success: true,
-        message: `Welcome, ${user.name}! Checked in at ${format(now, "hh:mm:ss a")}`,
+        message: `Welcome, ${user.name}! Checked in at ${istTimeStr}`,
         type: "ENTRY",
         user: {
           name: user.name,
