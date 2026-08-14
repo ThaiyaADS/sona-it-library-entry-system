@@ -19,7 +19,8 @@ import {
   ShieldAlert,
   Sun,
   Moon,
-  Search
+  Search,
+  Users
 } from "lucide-react";
 import { format } from "date-fns";
 import Image from "next/image";
@@ -230,9 +231,6 @@ export default function ScannerInterface({
 
   const isDark = theme === "dark";
 
-  // Seating Capacity Config
-  const maxSeatingCapacity = 50;
-  const occupancyPercentage = Math.min(100, Math.round((activeCount / maxSeatingCapacity) * 100));
 
   return (
     <div className={`min-h-screen flex flex-col justify-between relative overflow-hidden py-8 px-4 transition-colors duration-500 ${
@@ -330,45 +328,33 @@ export default function ScannerInterface({
         
         {/* Left Side: Scanning Zone */}
         <div className="lg:col-span-5 flex flex-col gap-6">
-          {/* Visual Capacity Meter card */}
+          {/* Library Occupancy Status card */}
           <Card className={`border shadow-lg rounded-3xl overflow-hidden transition-all duration-500 ${
             isDark ? "bg-slate-900/40 border-white/5" : "bg-white border-slate-200/80 shadow-slate-100/50"
           }`}>
             <CardContent className="p-6">
-              <div className="flex justify-between items-center mb-3">
-                <div>
-                  <p className={`text-[10px] font-bold uppercase tracking-widest ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
-                    Library Seating occupancy
-                  </p>
-                  <h2 className={`text-2xl font-black mt-0.5 ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>
-                    {activeCount} <span className={`text-xs font-normal ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>/ {maxSeatingCapacity} occupants inside</span>
-                  </h2>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-4">
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors duration-300 ${
+                    isDark ? "bg-cyan-500/10 text-cyan-400" : "bg-cyan-50 text-cyan-600"
+                  }`}>
+                    <Users className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className={`text-[10px] font-bold uppercase tracking-widest ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+                      Library Seating occupancy
+                    </p>
+                    <h2 className={`text-2xl font-black mt-0.5 ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>
+                      {activeCount} <span className={`text-xs font-normal ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>occupants inside</span>
+                    </h2>
+                  </div>
                 </div>
-                <div className={`px-2.5 py-1 rounded-xl border text-[10px] font-extrabold tracking-wider ${
-                  occupancyPercentage >= 90 
-                    ? "bg-red-500/10 text-red-500 border-red-500/20 animate-pulse" 
-                    : occupancyPercentage >= 75 
-                      ? "bg-amber-500/10 text-amber-500 border-amber-500/20" 
-                      : "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
+                <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-xl border text-[10px] font-extrabold tracking-wider ${
+                  isDark ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-emerald-50 text-emerald-600 border-emerald-200"
                 }`}>
-                  {occupancyPercentage}% CAP
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  LIVE
                 </div>
-              </div>
-              
-              {/* Progress bar */}
-              <div className={`w-full h-2.5 rounded-full overflow-hidden transition-all duration-500 ${
-                isDark ? "bg-slate-950" : "bg-slate-100"
-              }`}>
-                <div 
-                  className={`h-full rounded-full transition-all duration-500 ${
-                    occupancyPercentage >= 90 
-                      ? "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]" 
-                      : occupancyPercentage >= 75 
-                        ? "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.5)]" 
-                        : "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"
-                  }`}
-                  style={{ width: `${occupancyPercentage}%` }}
-                />
               </div>
             </CardContent>
           </Card>
