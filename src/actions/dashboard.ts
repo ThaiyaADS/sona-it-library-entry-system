@@ -149,3 +149,38 @@ export async function getAdminDashboardData() {
     liveUsers
   };
 }
+
+export async function getPublicLibraryStats() {
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const activeOccupants = await prisma.libraryVisit.count({
+      where: { exitTime: null }
+    });
+
+    const todaysVisits = await prisma.libraryVisit.count({
+      where: { entryTime: { gte: today } }
+    });
+
+    const totalMembers = await prisma.user.count({
+      where: {
+        role: { in: ["STUDENT", "FACULTY"] }
+      }
+    });
+
+    return {
+      activeOccupants,
+      todaysVisits,
+      totalMembers
+    };
+  } catch (error) {
+    console.error("Failed to fetch public library stats:", error);
+    return {
+      activeOccupants: 0,
+      todaysVisits: 0,
+      totalMembers: 0
+    };
+  }
+}
+

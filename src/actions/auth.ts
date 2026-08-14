@@ -22,9 +22,17 @@ export async function loginUser(formData: FormData, role: "STUDENT" | "FACULTY")
     return { error: "Invalid credentials" };
   }
 
-  const isValid = await bcrypt.compare(password, user.passwordHash);
-  if (!isValid) {
-    return { error: "Invalid credentials" };
+  if (role === "STUDENT") {
+    const isRegisterNumberMatch = user.registerNumber && password.trim() === user.registerNumber.trim();
+    const isPasswordHashMatch = await bcrypt.compare(password, user.passwordHash);
+    if (!isRegisterNumberMatch && !isPasswordHashMatch) {
+      return { error: "Invalid credentials" };
+    }
+  } else {
+    const isValid = await bcrypt.compare(password, user.passwordHash);
+    if (!isValid) {
+      return { error: "Invalid credentials" };
+    }
   }
 
   if (!user.isActive) {

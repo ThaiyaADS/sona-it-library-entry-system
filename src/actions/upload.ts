@@ -21,10 +21,10 @@ export async function uploadStudentsCSV(data: { rows: any[] }) {
       const identifier = row.identifier.toString().trim();
       const barcode = row.barcode ? row.barcode.toString().trim() : identifier;
       
-      // Default password is their Admission Number (identifier)
-      const defaultPassword = identifier;
-      const passwordHash = await bcrypt.hash(defaultPassword, 10);
       const registerNumber = (row.registerNumber || row.register_number || "").toString().trim() || null;
+      // Default password is their Register Number if available, otherwise Admission Number (identifier)
+      const defaultPassword = registerNumber || identifier;
+      const passwordHash = await bcrypt.hash(defaultPassword, 10);
 
       await prisma.user.upsert({
         where: { identifier },

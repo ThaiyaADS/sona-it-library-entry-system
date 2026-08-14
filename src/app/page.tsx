@@ -1,110 +1,189 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { GraduationCap, Briefcase, BookOpen, Clock, ShieldAlert } from "lucide-react";
+import { 
+  GraduationCap, 
+  Briefcase, 
+  Clock, 
+  QrCode, 
+  Activity, 
+  Users, 
+  ArrowRight,
+  Sparkles
+} from "lucide-react";
 import Image from "next/image";
+import { getPublicLibraryStats } from "@/actions/dashboard";
 
-export default function Home() {
+export default async function Home() {
+  const stats = await getPublicLibraryStats();
+
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-between">
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-indigo-950 text-slate-100 flex flex-col justify-between relative overflow-hidden">
+      {/* Decorative background glows */}
+      <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-blue-900/10 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-amber-500/5 blur-[100px] pointer-events-none" />
+
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 py-4 shadow-sm sticky top-0 z-50">
+      <header className="border-b border-white/5 bg-slate-950/60 backdrop-blur-md py-4 sticky top-0 z-50 transition-all">
         <div className="container mx-auto px-6 flex justify-between items-center">
           <div className="flex items-center gap-3">
             <Image 
               src="/logo.png" 
               alt="Sona College Logo" 
-              width={160} 
-              height={50} 
-              className="object-contain bg-slate-50 p-1 rounded-md" 
+              width={150} 
+              height={45} 
+              className="object-contain bg-white/90 p-1.5 rounded-lg border border-white/10" 
+              priority
             />
-            <div className="hidden sm:block border-l border-slate-200 pl-3">
-              <h1 className="text-xl font-bold text-slate-800 tracking-tight">IT Library</h1>
-              <p className="text-slate-500 text-xs">Member Portal</p>
+            <div className="hidden sm:block border-l border-white/10 pl-3">
+              <h1 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400 tracking-tight leading-none">
+                IT Library Portal
+              </h1>
+              <p className="text-slate-400 text-[10px] tracking-wider uppercase mt-1">Department of IT</p>
             </div>
           </div>
-          <Link href="/admin">
-            <Button variant="outline" className="border-slate-300 text-slate-700 hover:text-slate-900 hover:bg-slate-50 text-sm font-semibold transition-all">
-              Admin & Staff Portal
-            </Button>
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link href="/admin">
+              <Button variant="outline" className="border-white/10 text-slate-300 hover:text-white hover:bg-white/5 text-xs font-semibold transition-all duration-300">
+                Admin Console
+              </Button>
+            </Link>
+            <Link href="/scanner">
+              <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-lg shadow-blue-500/20 flex items-center gap-1.5 transition-all duration-300 cursor-pointer">
+                <QrCode className="w-3.5 h-3.5" />
+                Scan Gate
+              </Button>
+            </Link>
+          </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 container mx-auto px-6 py-16 flex flex-col justify-center items-center">
+      <main className="flex-1 container mx-auto px-6 py-12 md:py-20 flex flex-col justify-center items-center relative z-10">
+        
         {/* Hero Section */}
-        <div className="max-w-3xl text-center mb-16 animate-in slide-in-from-bottom-6 fade-in duration-500">
-          <span className="px-3 py-1 text-xs font-semibold text-slate-600 bg-slate-200/60 rounded-full border border-slate-300/40 inline-block mb-4">
-            Department of Information Technology
-          </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
-            Sona IT Library Portal
+        <div className="max-w-3xl text-center mb-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-amber-400 bg-amber-400/10 border border-amber-400/20 rounded-full mb-6">
+            <Sparkles className="w-3 h-3 text-amber-400 animate-pulse" />
+            <span>Sona College of Technology</span>
+          </div>
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-b from-white via-slate-100 to-slate-400">
+            Smart Library Entry System
           </h2>
-          <p className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto">
-            Log in to access your digital library profile, track your entry and exit history, and view your study duration records.
+          <p className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            A digital gateway for Department of IT members. Sign in to view your visit history, log durations, and profile records.
           </p>
         </div>
 
-        {/* Portal Access Options */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-3xl w-full">
-          {/* Student Portal Card */}
-          <Card className="bg-white border-slate-200 hover:border-slate-400 transition-all duration-300 group hover:shadow-xl flex flex-col justify-between">
-            <CardHeader className="p-8">
-              <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 mb-5 group-hover:scale-105 transition-transform duration-300">
+        {/* Live Stats Dashboard */}
+        <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-4 mb-16 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
+          <div className="relative group overflow-hidden bg-slate-900/40 border border-white/5 rounded-2xl p-6 backdrop-blur-sm transition-all duration-300 hover:border-blue-500/30 hover:bg-slate-900/60 shadow-lg">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-all duration-300" />
+            <div className="flex items-center justify-between">
+              <span className="text-slate-400 text-sm font-medium">Inside Library</span>
+              <span className="flex h-2.5 w-2.5 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </span>
+            </div>
+            <p className="text-3xl md:text-4xl font-extrabold text-white mt-4">{stats.activeOccupants}</p>
+            <p className="text-xs text-slate-500 mt-1">Current Active Occupants</p>
+          </div>
+
+          <div className="relative group overflow-hidden bg-slate-900/40 border border-white/5 rounded-2xl p-6 backdrop-blur-sm transition-all duration-300 hover:border-indigo-500/30 hover:bg-slate-900/60 shadow-lg">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-all duration-300" />
+            <div className="flex items-center justify-between text-slate-400">
+              <span className="text-sm font-medium">Today's Visits</span>
+              <Activity className="w-4 h-4 text-indigo-400" />
+            </div>
+            <p className="text-3xl md:text-4xl font-extrabold text-white mt-4">{stats.todaysVisits}</p>
+            <p className="text-xs text-slate-500 mt-1">Total visits registered today</p>
+          </div>
+
+          <div className="relative group overflow-hidden bg-slate-900/40 border border-white/5 rounded-2xl p-6 backdrop-blur-sm transition-all duration-300 hover:border-amber-500/30 hover:bg-slate-900/60 shadow-lg">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full blur-2xl group-hover:bg-amber-500/10 transition-all duration-300" />
+            <div className="flex items-center justify-between text-slate-400">
+              <span className="text-sm font-medium">Registered Members</span>
+              <Users className="w-4 h-4 text-amber-400" />
+            </div>
+            <p className="text-3xl md:text-4xl font-extrabold text-white mt-4">{stats.totalMembers}</p>
+            <p className="text-xs text-slate-500 mt-1">Total registered users in DB</p>
+          </div>
+        </div>
+
+        {/* Portal Cards */}
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl w-full animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+          
+          {/* Student Card */}
+          <div className="relative group rounded-3xl overflow-hidden border border-white/5 hover:border-blue-500/30 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 bg-slate-900/30 backdrop-blur-md flex flex-col justify-between min-h-[300px]">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-500" />
+            
+            <div className="p-8">
+              <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-6 group-hover:scale-110 transition-all duration-300 shadow-inner">
                 <GraduationCap className="w-6 h-6" />
               </div>
-              <CardTitle className="text-2xl font-bold text-slate-800">
-                Student Portal
-              </CardTitle>
-              <CardDescription className="text-slate-500 text-base mt-2 leading-relaxed">
-                Sign in with your Admission Number to view your personal dashboard, daily visits logs, and total library hours.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="px-8 pb-8 pt-0">
+              <h3 className="text-2xl font-bold text-white mb-2">Student Portal</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                Log in using your Admission Number to view your dashboard, log history, accumulated study hours, and check-in details.
+              </p>
+            </div>
+
+            <div className="px-8 pb-8 pt-0">
               <Link href="/student/login" className="block w-full">
-                <Button className="w-full h-12 bg-slate-900 hover:bg-slate-800 text-white font-semibold flex items-center justify-center gap-2 rounded-lg transition-all shadow-md hover:shadow-lg">
+                <Button className="w-full h-12 bg-white text-slate-950 font-bold hover:bg-slate-100 flex items-center justify-center gap-2 rounded-xl transition-all duration-300 group-hover:translate-y-[-2px] shadow-lg shadow-white/5 cursor-pointer">
                   Student Sign In
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
-          {/* Faculty Portal Card */}
-          <Card className="bg-white border-slate-200 hover:border-slate-400 transition-all duration-300 group hover:shadow-xl flex flex-col justify-between">
-            <CardHeader className="p-8">
-              <div className="w-12 h-12 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 mb-5 group-hover:scale-105 transition-transform duration-300">
+          {/* Faculty Card */}
+          <div className="relative group rounded-3xl overflow-hidden border border-white/5 hover:border-amber-500/30 transition-all duration-500 hover:shadow-2xl hover:shadow-amber-500/10 bg-slate-900/30 backdrop-blur-md flex flex-col justify-between min-h-[300px]">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 to-yellow-400" />
+            
+            <div className="p-8">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mb-6 group-hover:scale-110 transition-all duration-300 shadow-inner">
                 <Briefcase className="w-6 h-6" />
               </div>
-              <CardTitle className="text-2xl font-bold text-slate-800">
-                Faculty Portal
-              </CardTitle>
-              <CardDescription className="text-slate-500 text-base mt-2 leading-relaxed">
-                Sign in with your Faculty ID or registered email to view your visit history and check logs for academic tracking.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="px-8 pb-8 pt-0">
+              <h3 className="text-2xl font-bold text-white mb-2">Faculty Portal</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                Log in using your Faculty ID or registered email to monitor your logs, entry durations, and check active records.
+              </p>
+            </div>
+
+            <div className="px-8 pb-8 pt-0">
               <Link href="/faculty/login" className="block w-full">
-                <Button variant="outline" className="w-full h-12 border-slate-300 text-slate-700 hover:text-slate-900 hover:bg-slate-50 font-semibold flex items-center justify-center gap-2 rounded-lg transition-all">
+                <Button variant="outline" className="w-full h-12 border-white/10 hover:border-amber-400/30 text-slate-200 hover:text-amber-400 hover:bg-amber-400/5 font-bold flex items-center justify-center gap-2 rounded-xl transition-all duration-300 group-hover:translate-y-[-2px] cursor-pointer">
                   Faculty Sign In
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+
         </div>
+
+        {/* Operating Hours Info */}
+        <div className="mt-12 text-slate-500 text-xs flex items-center gap-2 bg-slate-900/20 px-4 py-2 border border-white/5 rounded-full animate-in fade-in duration-1000 delay-300">
+          <Clock className="w-3.5 h-3.5 text-slate-400" />
+          <span>Library Timings: <strong>8:00 AM - 8:00 PM</strong></span>
+        </div>
+
       </main>
 
       {/* Footer */}
-      <footer className="bg-slate-100 py-8 text-center text-slate-500 border-t border-slate-200 mt-auto">
+      <footer className="border-t border-white/5 bg-slate-950/80 py-8 text-center text-slate-500 mt-auto relative z-10 backdrop-blur-md">
         <div className="container mx-auto px-6">
-          <p className="font-semibold text-slate-600">Sona College of Technology</p>
-          <p className="text-slate-500 text-xs mt-1">Department of Information Technology</p>
-          <div className="mt-4 flex gap-4 justify-center text-slate-400 text-xs">
-            <Link href="/student/login" className="hover:text-slate-600 transition-colors">Student Portal</Link>
+          <p className="font-semibold text-slate-400 text-sm">Sona College of Technology</p>
+          <p className="text-slate-500 text-xs mt-1">Salem, Tamil Nadu, India | Department of Information Technology</p>
+          <div className="mt-6 flex gap-6 justify-center text-slate-400 text-xs">
+            <Link href="/student/login" className="hover:text-amber-400 transition-colors">Student Log</Link>
             <span>&bull;</span>
-            <Link href="/faculty/login" className="hover:text-slate-600 transition-colors">Faculty Portal</Link>
+            <Link href="/faculty/login" className="hover:text-amber-400 transition-colors">Faculty Log</Link>
             <span>&bull;</span>
-            <Link href="/admin" className="hover:text-slate-600 transition-colors font-medium text-slate-500">Admin Portal</Link>
+            <Link href="/admin" className="hover:text-amber-400 transition-colors font-medium text-slate-300">Admin Portal</Link>
+            <span>&bull;</span>
+            <Link href="/scanner" className="hover:text-amber-400 transition-colors font-medium text-slate-300">Scanner Gate</Link>
           </div>
         </div>
       </footer>

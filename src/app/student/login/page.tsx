@@ -15,11 +15,10 @@ export default function StudentLoginPage() {
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
       <LoginForm 
         title="Student Login" 
-        description="Enter your admission number to access your dashboard"
+        description="Enter your Admission Number and Register Number to access your dashboard"
         identifierLabel="Admission Number"
         identifierName="identifier"
         action={loginAction}
-        hidePassword={true}
       />
     </div>
   );

@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { differenceInMinutes } from "date-fns";
+import { differenceInMinutes, differenceInSeconds, format } from "date-fns";
 
 export type ScanResult = {
   success: boolean;
@@ -61,12 +61,13 @@ export async function processScan(barcode: string): Promise<ScanResult> {
 
     if (activeVisit) {
       // 3. EXIT Logic
-      // Optional: Prevent duplicate rapid scans (e.g. exit within 1 minute of entry)
-      const minutesSinceEntry = differenceInMinutes(now, activeVisit.entryTime);
-      if (minutesSinceEntry < 1) {
+      // Prevent duplicate rapid scans (exit within 1 minute / 60 seconds of entry)
+      const secondsSinceEntry = differenceInSeconds(now, activeVisit.entryTime);
+      if (secondsSinceEntry < 60) {
+         const timeLeft = 60 - secondsSinceEntry;
          return {
            success: false,
-           message: "Please wait before scanning again.",
+           message: `Scan Denied. Please wait. You can exit in ${timeLeft} second${timeLeft !== 1 ? 's' : ''}.`,
          };
       }
 
@@ -91,7 +92,7 @@ export async function processScan(barcode: string): Promise<ScanResult> {
       
       return {
         success: true,
-        message: "EXIT RECORDED",
+        message: `Goodbye, ${user.name}! Checked out at ${format(now, "hh:mm:ss a")}. Spent: ${durationStr}`,
         type: "EXIT",
         user: {
           name: user.name,
@@ -107,15 +108,19 @@ export async function processScan(barcode: string): Promise<ScanResult> {
       };
     } else {
       // 4. ENTRY Logic
-      // Check if they just exited a few seconds ago
+      // Check if they just exited less than 1 minute ago
       const lastVisit = await prisma.libraryVisit.findFirst({
          where: { userId: user.id },
          orderBy: { exitTime: 'desc' }
       });
       if (lastVisit?.exitTime) {
-         const minutesSinceExit = differenceInMinutes(now, lastVisit.exitTime);
-         if (minutesSinceExit < 1) {
-            return { success: false, message: "Please wait before scanning again." };
+         const secondsSinceExit = differenceInSeconds(now, lastVisit.exitTime);
+         if (secondsSinceExit < 60) {
+            const timeLeft = 60 - secondsSinceExit;
+            return { 
+               success: false, 
+               message: `Scan Denied. Please wait. You can enter in ${timeLeft} second${timeLeft !== 1 ? 's' : ''}.` 
+            };
          }
       }
 
@@ -133,7 +138,7 @@ export async function processScan(barcode: string): Promise<ScanResult> {
 
       return {
         success: true,
-        message: "ENTRY RECORDED",
+        message: `Welcome, ${user.name}! Checked in at ${format(now, "hh:mm:ss a")}`,
         type: "ENTRY",
         user: {
           name: user.name,

@@ -14,7 +14,8 @@ export async function createUser(data: any) {
   try {
     const identifier = data.identifier.toString().trim();
     const barcode = data.barcode ? data.barcode.toString().trim() : identifier;
-    const defaultPassword = identifier; // Default password is the identifier
+    const registerNumber = data.registerNumber ? data.registerNumber.toString().trim() : null;
+    const defaultPassword = data.role === "STUDENT" && registerNumber ? registerNumber : identifier;
     const passwordHash = await bcrypt.hash(defaultPassword, 10);
 
     // Check if user exists
