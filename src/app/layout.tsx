@@ -11,10 +11,10 @@ export const metadata: Metadata = {
   description: "Smart library entry management for Sona College of Technology",
   icons: {
     icon: [
-      { url: "/icon.png", type: "image/png" },
+      { url: "/icon.jpg", type: "image/jpeg" },
     ],
     apple: [
-      { url: "/icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/icon.jpg", sizes: "180x180", type: "image/jpeg" },
     ],
   },
 };
