@@ -44,17 +44,19 @@ export default async function Home() {
               <p className="text-slate-500 dark:text-slate-400 text-[10px] tracking-wider uppercase mt-1">Department of IT</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
             <Link href="/admin">
               <Button variant="outline" className="border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 text-xs font-semibold transition-all duration-300">
-                Admin Console
+                <span className="hidden sm:inline">Admin Console</span>
+                <span className="sm:hidden">Admin</span>
               </Button>
             </Link>
             <Link href="/scanner">
               <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-lg shadow-blue-500/10 dark:shadow-blue-500/20 flex items-center gap-1.5 transition-all duration-300 cursor-pointer">
                 <QrCode className="w-3.5 h-3.5" />
-                Scan Gate
+                <span className="hidden sm:inline">Scan Gate</span>
+                <span className="sm:hidden">Scan</span>
               </Button>
             </Link>
           </div>
@@ -170,13 +172,13 @@ export default async function Home() {
         <div className="container mx-auto px-6">
           <p className="font-semibold text-slate-600 dark:text-slate-400 text-sm">Sona College of Technology</p>
           <p className="text-slate-500 text-xs mt-1">Salem, Tamil Nadu, India | Department of Information Technology</p>
-          <div className="mt-6 flex gap-6 justify-center text-slate-500 dark:text-slate-400 text-xs font-medium">
+          <div className="mt-6 flex flex-wrap gap-x-4 gap-y-2 sm:gap-6 justify-center text-slate-500 dark:text-slate-400 text-xs font-medium">
             <Link href="/student/login" className="hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Student Log</Link>
-            <span>&bull;</span>
+            <span className="hidden sm:inline">&bull;</span>
             <Link href="/faculty/login" className="hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Faculty Log</Link>
-            <span>&bull;</span>
+            <span className="hidden sm:inline">&bull;</span>
             <Link href="/admin" className="hover:text-amber-600 dark:hover:text-amber-400 transition-colors font-semibold text-slate-600 dark:text-slate-300">Admin Portal</Link>
-            <span>&bull;</span>
+            <span className="hidden sm:inline">&bull;</span>
             <Link href="/scanner" className="hover:text-amber-600 dark:hover:text-amber-400 transition-colors font-semibold text-slate-600 dark:text-slate-300">Scanner Gate</Link>
           </div>
         </div>

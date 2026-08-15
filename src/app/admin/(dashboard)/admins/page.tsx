@@ -20,7 +20,7 @@ export default async function AdminManagementPage() {
   });
 
   return (
-    <div className="p-8 animate-in fade-in duration-300">
+    <div className="p-4 sm:p-6 md:p-8 animate-in fade-in duration-300">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center">
            <UserCheck className="w-8 h-8 mr-3 text-blue-600" /> Admin Users

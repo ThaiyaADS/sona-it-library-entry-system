@@ -32,7 +32,7 @@ export default async function AdminVisits() {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-6 md:p-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center">
            <BookOpen className="w-8 h-8 mr-3 text-blue-600" /> Library Visit History

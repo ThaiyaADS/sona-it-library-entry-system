@@ -48,7 +48,7 @@ export default function LiveMonitoringClient({ initialLiveUsers }: { initialLive
   });
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="p-4 sm:p-6 md:p-8 space-y-6">
       {/* Live status indicators header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>

@@ -31,11 +31,12 @@ export default function AdminLandingPage() {
               <p className="text-slate-500 dark:text-slate-400 text-xs font-medium">Operations Center</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
             <Link href="/">
               <Button variant="outline" className="border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800 text-sm font-semibold transition-all">
-                Student & Faculty Portal
+                <span className="hidden sm:inline">Student & Faculty Portal</span>
+                <span className="sm:hidden">Portal</span>
               </Button>
             </Link>
           </div>

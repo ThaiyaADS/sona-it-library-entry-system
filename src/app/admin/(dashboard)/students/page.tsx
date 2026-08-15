@@ -22,7 +22,7 @@ export default async function AdminStudents() {
   });
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-6 md:p-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-slate-900 tracking-tight flex items-center">
            <Users className="w-8 h-8 mr-3 text-blue-600" /> Students

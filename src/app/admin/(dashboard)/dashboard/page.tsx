@@ -21,7 +21,7 @@ export default async function AdminDashboard() {
   const facultyInsides = liveUsers.filter(v => v.user.role === 'FACULTY').length;
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-6 md:p-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Library Administration</h1>

@@ -34,9 +34,9 @@ export default async function FacultyDashboard() {
               <p className="text-slate-400 text-xs">Faculty Portal</p>
             </div>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <ThemeToggle />
-            <span className="text-sm font-medium">Welcome, {user.name}</span>
+            <span className="hidden sm:inline text-sm font-medium">Welcome, {user.name}</span>
             <form action="/api/auth/logout" method="POST">
                <Button type="submit" variant="ghost" className="text-slate-300 hover:text-white hover:bg-slate-800 cursor-pointer" size="sm">
                  <LogOut className="w-4 h-4 mr-2" /> Logout
