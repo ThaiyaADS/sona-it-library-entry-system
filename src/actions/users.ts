@@ -132,3 +132,29 @@ export async function deleteUser(id: string, role: "STUDENT" | "FACULTY") {
     return { success: false, message: "Failed to delete user." };
   }
 }
+
+export async function deleteUsers(ids: string[], role: "STUDENT" | "FACULTY") {
+  const session = await getSession();
+  if (!session || session.user.role !== "ADMIN") {
+    return { success: false, message: "Unauthorized" };
+  }
+
+  try {
+    // Delete visits first
+    await prisma.libraryVisit.deleteMany({
+      where: { userId: { in: ids } }
+    });
+
+    // Delete users
+    await prisma.user.deleteMany({
+      where: { id: { in: ids } }
+    });
+
+    const path = role === "STUDENT" ? "/admin/students" : "/admin/faculty";
+    revalidatePath(path);
+    return { success: true, message: `Successfully deleted ${ids.length} users.` };
+  } catch (error) {
+    console.error("Delete users bulk error:", error);
+    return { success: false, message: "Failed to delete users." };
+  }
+}
