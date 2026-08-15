@@ -113,7 +113,7 @@ export default function UserFormModal({ type, mode, initialData }: UserFormModal
               name="department" 
               defaultValue={initialData?.department || "IT"} 
               required
-              className="flex h-9 w-full rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
+              className="flex h-9 w-full rounded-md border border-slate-200 bg-white dark:bg-slate-900 dark:border-white/10 dark:text-slate-100 dark:focus-visible:ring-white/30 px-3 py-1.5 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
             >
               <option value="IT">IT</option>
               <option value="ADS">ADS</option>
@@ -129,7 +129,7 @@ export default function UserFormModal({ type, mode, initialData }: UserFormModal
                   name="year" 
                   defaultValue={initialData?.year || "I"} 
                   required
-                  className="flex h-9 w-full rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
+                  className="flex h-9 w-full rounded-md border border-slate-200 bg-white dark:bg-slate-900 dark:border-white/10 dark:text-slate-100 dark:focus-visible:ring-white/30 px-3 py-1.5 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
                 >
                   <option value="I">I</option>
                   <option value="II">II</option>
@@ -145,7 +145,7 @@ export default function UserFormModal({ type, mode, initialData }: UserFormModal
                   name="section" 
                   defaultValue={initialData?.section || "A"} 
                   required
-                  className="flex h-9 w-full rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
+                  className="flex h-9 w-full rounded-md border border-slate-200 bg-white dark:bg-slate-900 dark:border-white/10 dark:text-slate-100 dark:focus-visible:ring-white/30 px-3 py-1.5 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
                 >
                   <option value="A">A</option>
                   <option value="B">B</option>

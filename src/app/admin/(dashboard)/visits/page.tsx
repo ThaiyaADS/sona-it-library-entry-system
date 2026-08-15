@@ -34,15 +34,15 @@ export default async function AdminVisits() {
   return (
     <div className="p-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight flex items-center">
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center">
            <BookOpen className="w-8 h-8 mr-3 text-blue-600" /> Library Visit History
         </h1>
       </div>
 
-      <Card className="shadow-sm border-slate-200">
+      <Card className="shadow-sm border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 overflow-hidden text-slate-800 dark:text-slate-100">
          <div className="overflow-x-auto">
            <table className="w-full text-sm text-left">
-              <thead className="text-xs text-slate-500 uppercase bg-slate-50 border-b">
+              <thead className="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-slate-900/50 border-b dark:border-white/5">
                  <tr>
                     <th className="px-6 py-4">Date</th>
                     <th className="px-6 py-4">User Type</th>
@@ -54,10 +54,10 @@ export default async function AdminVisits() {
                     <th className="px-6 py-4">Status</th>
                  </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                  {visits.map((visit) => (
-                    <tr key={visit.id} className="border-b hover:bg-slate-50">
-                       <td className="px-6 py-4 font-medium text-slate-900">
+                    <tr key={visit.id} className="border-b dark:border-white/5 hover:bg-slate-50 dark:hover:bg-slate-900/50">
+                       <td className="px-6 py-4 font-medium text-slate-900 dark:text-white">
                           {format(new Date(visit.entryTime), "MMM dd, yyyy")}
                        </td>
                        <td className="px-6 py-4">
@@ -65,19 +65,19 @@ export default async function AdminVisits() {
                             {visit.user.role}
                          </Badge>
                        </td>
-                       <td className="px-6 py-4 font-bold text-slate-900">{visit.user.name}</td>
-                       <td className="px-6 py-4 font-mono text-slate-600">{visit.user.identifier}</td>
-                       <td className="px-6 py-4 font-mono text-slate-600">
+                       <td className="px-6 py-4 font-bold text-slate-900 dark:text-white">{visit.user.name}</td>
+                       <td className="px-6 py-4 font-mono text-slate-600 dark:text-slate-400">{visit.user.identifier}</td>
+                       <td className="px-6 py-4 font-mono text-slate-600 dark:text-slate-400">
                           {format(new Date(visit.entryTime), "hh:mm a")}
                        </td>
-                       <td className="px-6 py-4 font-mono text-slate-600">
+                       <td className="px-6 py-4 font-mono text-slate-600 dark:text-slate-400">
                           {visit.exitTime ? format(new Date(visit.exitTime), "hh:mm a") : "-"}
                        </td>
-                       <td className="px-6 py-4 font-mono font-bold text-slate-800">
+                       <td className="px-6 py-4 font-mono font-bold text-slate-800 dark:text-slate-350">
                           {formatDuration(visit.durationMinutes)}
                        </td>
                        <td className="px-6 py-4">
-                          <span className={`px-2 py-1 rounded-full text-xs font-semibold ${visit.status === 'INSIDE' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-800'}`}>
+                          <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${visit.status === 'INSIDE' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400' : 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300'}`}>
                              {visit.status}
                           </span>
                        </td>
@@ -85,7 +85,7 @@ export default async function AdminVisits() {
                  ))}
                  {visits.length === 0 && (
                     <tr>
-                       <td colSpan={8} className="px-6 py-8 text-center text-slate-500">
+                       <td colSpan={8} className="px-6 py-8 text-center text-slate-500 dark:text-slate-400">
                           No visits found.
                        </td>
                     </tr>
