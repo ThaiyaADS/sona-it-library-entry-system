@@ -17,13 +17,15 @@ export default function AdminLandingPage() {
       <header className="border-b border-slate-200/80 dark:border-slate-800 bg-white/80 dark:bg-slate-900/50 backdrop-blur-md sticky top-0 z-50 transition-all">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <Image 
-              src="/logo.png" 
-              alt="Sona College Logo" 
-              width={160} 
-              height={50} 
-              className="object-contain bg-white/95 p-1.5 rounded-md border border-slate-200 dark:border-slate-700 shadow-sm" 
-            />
+            <Link href="/" className="transition-all duration-300 hover:scale-105 active:scale-95 block">
+              <Image 
+                src="/logo.png" 
+                alt="Sona College Logo" 
+                width={160} 
+                height={50} 
+                className="object-contain bg-white/95 p-1.5 rounded-md border border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer" 
+              />
+            </Link>
             <div className="hidden sm:block border-l border-slate-200 dark:border-slate-800 pl-3">
               <h1 className="text-xl font-bold text-slate-800 dark:text-white tracking-tight">IT Library</h1>
               <p className="text-slate-500 dark:text-slate-400 text-xs font-medium">Operations Center</p>

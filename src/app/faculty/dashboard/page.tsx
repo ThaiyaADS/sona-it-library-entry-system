@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { Book, Clock, LogOut, Activity } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
 
 export const metadata = {
@@ -25,7 +26,9 @@ export default async function FacultyDashboard() {
       <header className="bg-slate-900 text-white py-4 shadow-md">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <Image src="/logo.png" alt="Sona College Logo" width={140} height={40} className="object-contain bg-white/10 p-1 rounded-md" />
+            <Link href="/" className="transition-all duration-300 hover:scale-105 active:scale-95 block">
+              <Image src="/logo.png" alt="Sona College Logo" width={140} height={40} className="object-contain bg-white/10 p-1 rounded-md cursor-pointer" />
+            </Link>
             <div className="hidden sm:block border-l border-slate-700 pl-3">
               <h1 className="text-xl font-bold tracking-tight">IT Library</h1>
               <p className="text-slate-400 text-xs">Faculty Portal</p>

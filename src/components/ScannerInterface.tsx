@@ -292,15 +292,17 @@ export default function ScannerInterface({
 
       {/* Center Layout Header */}
       <div className="max-w-6xl w-full mx-auto flex flex-col items-center text-center z-10 mb-8">
-        <Image 
-          src="/logo.png" 
-          alt="Sona College Logo" 
-          width={160} 
-          height={50} 
-          className={`object-contain p-2 rounded-2xl shadow-md border mb-4 transition-all duration-500 ${
-            isDark ? "bg-white/95 border-white/10" : "bg-white border-slate-200"
-          }`} 
-        />
+        <Link href="/" className="transition-all duration-300 hover:scale-105 active:scale-95 block">
+          <Image 
+            src="/logo.png" 
+            alt="Sona College Logo" 
+            width={160} 
+            height={50} 
+            className={`object-contain p-2 rounded-2xl shadow-md border mb-4 transition-all duration-500 cursor-pointer ${
+              isDark ? "bg-white/95 border-white/10" : "bg-white border-slate-200"
+            }`} 
+          />
+        </Link>
         <h1 className={`text-3xl md:text-4xl font-extrabold tracking-wider transition-all duration-500 ${
           isDark 
             ? "bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400" 

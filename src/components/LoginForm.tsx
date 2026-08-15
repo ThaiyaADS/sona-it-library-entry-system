@@ -18,6 +18,7 @@ interface LoginFormProps {
   action: (formData: FormData) => Promise<any>;
   homeLink?: boolean;
   hidePassword?: boolean;
+  passwordLabel?: string;
 }
 
 export default function LoginForm({ 
@@ -27,7 +28,8 @@ export default function LoginForm({
   identifierName, 
   action, 
   homeLink = true,
-  hidePassword = false
+  hidePassword = false,
+  passwordLabel
 }: LoginFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -65,14 +67,16 @@ export default function LoginForm({
 
       <CardHeader className="space-y-2 text-center pb-4 pt-8 z-10">
         <div className="flex justify-center mb-5">
-          <Image 
-            src="/logo.png" 
-            alt="Sona College Logo" 
-            width={180} 
-            height={55} 
-            className="object-contain bg-white/95 p-2 rounded-2xl border border-slate-200 dark:border-white/10 shadow-md transition-transform duration-300 hover:scale-102" 
-            priority
-          />
+          <Link href="/" className="transition-all duration-300 hover:scale-105 active:scale-95 block">
+            <Image 
+              src="/logo.png" 
+              alt="Sona College Logo" 
+              width={180} 
+              height={55} 
+              className="object-contain bg-white/95 p-2 rounded-2xl border border-slate-200 dark:border-white/10 shadow-md cursor-pointer" 
+              priority
+            />
+          </Link>
         </div>
         <CardTitle className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white dark:bg-clip-text dark:text-transparent dark:bg-gradient-to-b dark:from-white dark:via-slate-100 dark:to-slate-300">{title}</CardTitle>
         <CardDescription className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-[280px] mx-auto">{description}</CardDescription>
@@ -94,7 +98,7 @@ export default function LoginForm({
           {!hidePassword && (
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                 <Label htmlFor="password" className="text-slate-700 dark:text-slate-300 text-xs font-bold uppercase tracking-wider">Password</Label>
+                 <Label htmlFor="password" className="text-slate-700 dark:text-slate-300 text-xs font-bold uppercase tracking-wider">{passwordLabel || "Password"}</Label>
                  {title !== "Admin Login" && (
                     <Link href="#" className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors">
                        Forgot password?

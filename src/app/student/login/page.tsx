@@ -23,6 +23,7 @@ export default function StudentLoginPage() {
           description="Enter your Admission Number and Register Number to access your student dashboard."
           identifierLabel="Admission Number"
           identifierName="identifier"
+          passwordLabel="Password (Register Number)"
           action={loginAction}
         />
       </div>

@@ -10,7 +10,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Sidebar */}
       <aside className="w-full md:w-64 bg-slate-900 text-slate-300 flex flex-col min-h-screen">
         <div className="p-6 border-b border-slate-800">
-          <Image src="/logo.png" alt="Sona College Logo" width={160} height={50} className="object-contain bg-white/10 p-1 rounded-md mb-4" />
+          <Link href="/" className="transition-all duration-300 hover:scale-105 active:scale-95 block w-fit mb-4">
+            <Image src="/logo.png" alt="Sona College Logo" width={160} height={50} className="object-contain bg-white/10 p-1 rounded-md cursor-pointer" />
+          </Link>
           <h2 className="text-xl font-bold text-white tracking-tight">IT Library</h2>
           <p className="text-xs text-slate-400 mt-1">Administration Portal</p>
         </div>

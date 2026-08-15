@@ -27,14 +27,16 @@ export default async function Home() {
       <header className="border-b border-slate-200/80 dark:border-white/5 bg-white/80 dark:bg-slate-950/60 backdrop-blur-md py-4 sticky top-0 z-50 transition-all">
         <div className="container mx-auto px-6 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <Image 
-              src="/logo.png" 
-              alt="Sona College Logo" 
-              width={150} 
-              height={45} 
-              className="object-contain bg-white/95 p-1.5 rounded-lg border border-slate-200 dark:border-white/10 shadow-sm" 
-              priority
-            />
+            <Link href="/" className="transition-all duration-300 hover:scale-105 active:scale-95 block">
+              <Image 
+                src="/logo.png" 
+                alt="Sona College Logo" 
+                width={150} 
+                height={45} 
+                className="object-contain bg-white/95 p-1.5 rounded-lg border border-slate-200 dark:border-white/10 shadow-sm cursor-pointer" 
+                priority
+              />
+            </Link>
             <div className="hidden sm:block border-l border-slate-200 dark:border-white/10 pl-3">
               <h1 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:via-slate-200 dark:to-slate-400 tracking-tight leading-none">
                 IT Library Portal
