@@ -131,7 +131,7 @@ export default function FacultyTable({ initialFaculty }: FacultyTableProps) {
                 {selectedIds.length} Selected
               </span>
             ) : (
-              `Registered Faculty (${filteredFaculty.length} of {initialFaculty.length})`
+              `Registered Faculty (${filteredFaculty.length} of ${initialFaculty.length})`
             )}
           </CardTitle>
           <div className="flex gap-2">
@@ -150,9 +150,9 @@ export default function FacultyTable({ initialFaculty }: FacultyTableProps) {
         </CardHeader>
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="text-xs text-slate-500 dark:text-slate-400 uppercase bg-white dark:bg-slate-900/50 border-b dark:border-white/5">
+            <thead className="text-[11px] text-slate-500 dark:text-slate-400 uppercase bg-white dark:bg-slate-900/50 border-b dark:border-white/5">
               <tr>
-                <th className="px-6 py-4 w-12 text-center">
+                <th className="px-3 py-3 w-10 text-center">
                   <input 
                     type="checkbox" 
                     checked={filteredFaculty.length > 0 && selectedIds.length === filteredFaculty.length}
@@ -160,17 +160,19 @@ export default function FacultyTable({ initialFaculty }: FacultyTableProps) {
                     className="w-4 h-4 rounded border-slate-300 dark:border-white/10 text-blue-600 focus:ring-blue-500 accent-blue-500 cursor-pointer"
                   />
                 </th>
-                <th className="px-6 py-4">Name</th>
-                <th className="px-6 py-4">Faculty ID</th>
-                <th className="px-6 py-4">Department</th>
-                <th className="px-6 py-4">Designation</th>
-                <th className="px-6 py-4 text-right">Actions</th>
+                <th className="px-3 py-3">Name</th>
+                <th className="px-3 py-3">Faculty ID</th>
+                <th className="px-3 py-3">Barcode</th>
+                <th className="px-3 py-3">Department</th>
+                <th className="px-3 py-3">Email</th>
+                <th className="px-3 py-3">Designation</th>
+                <th className="px-3 py-3 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-white/5">
               {filteredFaculty.map((faculty) => (
                 <tr key={faculty.id} className="border-b dark:border-white/5 hover:bg-slate-50 dark:hover:bg-slate-900/50">
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 py-3 text-center">
                     <input 
                       type="checkbox" 
                       checked={selectedIds.includes(faculty.id)}
@@ -178,11 +180,13 @@ export default function FacultyTable({ initialFaculty }: FacultyTableProps) {
                       className="w-4 h-4 rounded border-slate-300 dark:border-white/10 text-blue-600 focus:ring-blue-500 accent-blue-500 cursor-pointer"
                     />
                   </td>
-                  <td className="px-6 py-4 font-bold text-slate-900 dark:text-white">{faculty.name}</td>
-                  <td className="px-6 py-4 font-mono text-slate-600 dark:text-slate-400">{faculty.identifier}</td>
-                  <td className="px-6 py-4 text-slate-600 dark:text-slate-400">{faculty.department}</td>
-                  <td className="px-6 py-4 text-slate-600 dark:text-slate-400">{faculty.designation}</td>
-                  <td className="px-6 py-4 text-right flex justify-end gap-1 items-center">
+                  <td className="px-3 py-3 font-bold text-slate-900 dark:text-white text-xs">{faculty.name}</td>
+                  <td className="px-3 py-3 font-mono text-slate-600 dark:text-slate-400 text-xs">{faculty.identifier}</td>
+                  <td className="px-3 py-3 font-mono text-slate-600 dark:text-slate-400 text-xs">{faculty.barcode || faculty.identifier}</td>
+                  <td className="px-3 py-3 text-slate-600 dark:text-slate-400 text-xs">{faculty.department}</td>
+                  <td className="px-3 py-3 text-slate-600 dark:text-slate-400 text-xs">{faculty.email || "-"}</td>
+                  <td className="px-3 py-3 text-slate-600 dark:text-slate-400 text-xs">{faculty.designation}</td>
+                  <td className="px-3 py-3 text-right flex justify-end gap-0.5 items-center">
                     <UserFormModal type="FACULTY" mode="EDIT" initialData={faculty} />
                     <DeleteUserButton id={faculty.id} name={faculty.name} role="FACULTY" />
                   </td>
@@ -190,7 +194,7 @@ export default function FacultyTable({ initialFaculty }: FacultyTableProps) {
               ))}
               {filteredFaculty.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-6 py-8 text-center text-slate-500 dark:text-slate-400">
+                  <td colSpan={8} className="px-3 py-6 text-center text-slate-500 dark:text-slate-400">
                     No faculty members found matching the filters.
                   </td>
                 </tr>

@@ -133,9 +133,12 @@ export default function ScannerInterface({
 
   // Live clock
   useEffect(() => {
-    setMounted(true);
+    const mountTimer = setTimeout(() => setMounted(true), 0);
     const timer = setInterval(() => setTime(new Date()), 1000);
-    return () => clearInterval(timer);
+    return () => {
+      clearTimeout(mountTimer);
+      clearInterval(timer);
+    };
   }, []);
 
   // Pre-initialize/resume AudioContext on first user click/keypress to bypass autoplay restrictions

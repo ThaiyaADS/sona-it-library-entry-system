@@ -120,6 +120,18 @@ export default function UserFormModal({ type, mode, initialData }: UserFormModal
             </select>
           </div>
 
+          <div className="grid gap-2">
+            <Label htmlFor="email">Email *</Label>
+            <Input 
+              id="email" 
+              name="email" 
+              type="email"
+              defaultValue={initialData?.email} 
+              placeholder="e.g. name@sonacollege.org"
+              required
+            />
+          </div>
+
           {isStudent ? (
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
@@ -154,9 +166,15 @@ export default function UserFormModal({ type, mode, initialData }: UserFormModal
               </div>
             </div>
           ) : (
-            <div className="grid gap-2">
-              <Label htmlFor="designation">Designation</Label>
-              <Input id="designation" name="designation" defaultValue={initialData?.designation} placeholder="e.g. Assistant Professor" />
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="designation">Designation</Label>
+                <Input id="designation" name="designation" defaultValue={initialData?.designation} placeholder="e.g. Assistant Professor" />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="barcode">Barcode Scanner ID *</Label>
+                <Input id="barcode" name="barcode" defaultValue={initialData?.barcode} placeholder="e.g. FAC-BAR-001" required />
+              </div>
             </div>
           )}
 

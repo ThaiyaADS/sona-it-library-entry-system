@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Users, BookOpen, Clock, Activity, LogOut, FileText, Settings, LayoutDashboard } from "lucide-react";
+import { Users, BookOpen, Clock, Activity, LogOut, FileText, Settings, LayoutDashboard, UserCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -26,6 +26,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </Link>
           <Link href="/admin/faculty" className="flex items-center gap-3 px-3 py-2.5 rounded-md hover:bg-slate-800 hover:text-white transition-colors">
             <Users className="w-5 h-5" /> Faculty
+          </Link>
+          <Link href="/admin/admins" className="flex items-center gap-3 px-3 py-2.5 rounded-md hover:bg-slate-800 hover:text-white transition-colors">
+            <UserCheck className="w-5 h-5" /> Admin Accounts
           </Link>
           <Link href="/admin/visits" className="flex items-center gap-3 px-3 py-2.5 rounded-md hover:bg-slate-800 hover:text-white transition-colors">
             <BookOpen className="w-5 h-5" /> Library Visits

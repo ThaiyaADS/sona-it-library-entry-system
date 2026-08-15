@@ -94,7 +94,7 @@ export default async function Home() {
           <div className="relative group overflow-hidden bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 rounded-2xl p-6 backdrop-blur-sm transition-all duration-300 hover:border-indigo-500/30 hover:bg-slate-50/50 dark:hover:bg-slate-900/60 shadow-sm dark:shadow-lg">
             <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-all duration-300" />
             <div className="flex items-center justify-between text-slate-500 dark:text-slate-400">
-              <span className="text-sm font-medium">Today's Visits</span>
+              <span className="text-sm font-medium">Today&apos;s Visits</span>
               <Activity className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
             </div>
             <p className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mt-4">{stats.todaysVisits}</p>

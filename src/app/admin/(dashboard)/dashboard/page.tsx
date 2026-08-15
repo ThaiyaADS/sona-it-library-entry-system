@@ -45,7 +45,7 @@ export default async function AdminDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <Card className="shadow-sm border-slate-200 bg-white dark:bg-slate-900/60 dark:border-white/10 text-slate-800 dark:text-slate-100">
           <CardHeader className="pb-2 flex flex-row items-center justify-between">
-            <CardTitle className="text-sm font-medium text-slate-500 dark:text-slate-400">Today's Visits</CardTitle>
+            <CardTitle className="text-sm font-medium text-slate-500 dark:text-slate-400">Today&apos;s Visits</CardTitle>
             <LogIn className="w-4 h-4 text-slate-400" />
           </CardHeader>
           <CardContent>
@@ -130,7 +130,7 @@ export default async function AdminDashboard() {
       <Card className="shadow-sm border-slate-200 dark:border-white/10 mb-8 overflow-hidden bg-white dark:bg-slate-900/60">
         <CardHeader className="bg-slate-50/50 dark:bg-slate-900/25 border-b border-slate-100 dark:border-white/5 py-4 px-6">
           <CardTitle className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
-            <Activity className="w-4 h-4 text-blue-500" /> Peak Entry Hours (Today's Logs)
+            <Activity className="w-4 h-4 text-blue-500" /> Peak Entry Hours (Today&apos;s Logs)
           </CardTitle>
         </CardHeader>
         <CardContent className="p-6">
