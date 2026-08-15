@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useTheme } from "next-themes";
 import { processScan, ScanResult } from "@/actions/scanner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -123,7 +124,7 @@ export default function ScannerInterface({
   const [result, setResult] = useState<ScanResult | null>(null);
   const [recentScans, setRecentScans] = useState<any[]>(initialScans);
   const [time, setTime] = useState(new Date());
-  const [theme, setTheme] = useState<"light" | "dark">("light"); // Light theme by default
+  const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [activeCount, setActiveCount] = useState(initialActiveCount);
   const [searchQuery, setSearchQuery] = useState("");
@@ -225,16 +226,16 @@ export default function ScannerInterface({
     }, 100);
   };
 
-  const toggleTheme = () => {
-    setTheme(prev => prev === "light" ? "dark" : "light");
-  };
+  const isDark = mounted ? resolvedTheme === "dark" : true;
 
-  const isDark = theme === "dark";
+  const toggleTheme = () => {
+    setTheme(isDark ? "light" : "dark");
+  };
 
 
   return (
     <div className={`min-h-screen flex flex-col justify-between relative overflow-hidden py-8 px-4 transition-colors duration-500 ${
-      isDark ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-800"
+      isDark ? "dark bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-800"
     }`}>
       {/* Background Decorative Glows */}
       <div className={`absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full blur-[150px] pointer-events-none transition-colors duration-500 ${

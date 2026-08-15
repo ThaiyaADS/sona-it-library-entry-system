@@ -2,10 +2,11 @@ import Link from "next/link";
 import { Users, BookOpen, Clock, Activity, LogOut, FileText, Settings, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row">
+    <div className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 flex flex-col md:flex-row transition-colors duration-500">
       {/* Sidebar */}
       <aside className="w-full md:w-64 bg-slate-900 text-slate-300 flex flex-col min-h-screen">
         <div className="p-6 border-b border-slate-800">
@@ -33,9 +34,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <FileText className="w-5 h-5" /> Reports
           </Link>
         </nav>
-        <div className="p-4 mt-auto border-t border-slate-800">
+        <div className="p-4 mt-auto border-t border-slate-800 flex flex-col gap-3">
+          <div className="flex items-center justify-between px-3">
+            <span className="text-xs font-semibold text-slate-400">Toggle Theme</span>
+            <ThemeToggle />
+          </div>
           <form action="/api/auth/logout" method="POST">
-             <Button type="submit" variant="ghost" className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800">
+             <Button type="submit" variant="ghost" className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800 cursor-pointer">
                <LogOut className="w-5 h-5 mr-3" /> Logout
              </Button>
           </form>

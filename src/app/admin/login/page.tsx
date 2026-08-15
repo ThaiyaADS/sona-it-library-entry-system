@@ -19,15 +19,15 @@ export default async function AdminLoginPage({
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-         <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-white tracking-tight">Sona IT Library</h1>
-            <p className="text-slate-400 mt-2">Administration Portal</p>
-         </div>
+    <div className="dark min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-indigo-950 text-slate-100 flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Background Decorative Glows */}
+      <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-blue-950/10 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] rounded-full bg-indigo-950/20 blur-[100px] pointer-events-none" />
+
+      <div className="w-full max-w-md z-10 relative">
          <LoginForm 
            title="Admin Login" 
-           description="Authorized personnel only"
+           description="Authorized IT department operations personnel only."
            identifierLabel="Admin Username"
            identifierName="username"
            action={loginAction}
