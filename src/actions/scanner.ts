@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { differenceInMinutes, differenceInSeconds, format } from "date-fns";
+import { getSession } from "@/lib/auth";
 
 export type ScanResult = {
   success: boolean;
@@ -22,6 +23,11 @@ export type ScanResult = {
 };
 
 export async function processScan(barcode: string): Promise<ScanResult> {
+  const session = await getSession();
+  if (!session || session.user.role !== "ADMIN") {
+    return { success: false, message: "Unauthorized. Admin session required." };
+  }
+
   if (!barcode) {
     return { success: false, message: "Barcode cannot be empty." };
   }
@@ -168,6 +174,11 @@ export async function processScan(barcode: string): Promise<ScanResult> {
 }
 
 export async function getRecentScans() {
+  const session = await getSession();
+  if (!session || session.user.role !== "ADMIN") {
+    return [];
+  }
+
   const recentVisits = await prisma.libraryVisit.findMany({
     take: 10,
     orderBy: {

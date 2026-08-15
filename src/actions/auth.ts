@@ -49,7 +49,7 @@ export async function loginUser(formData: FormData, role: "STUDENT" | "FACULTY")
   redirect(`/${role.toLowerCase()}/dashboard`);
 }
 
-export async function loginAdmin(formData: FormData) {
+export async function loginAdmin(formData: FormData, redirectPath?: string) {
   const username = formData.get("username") as string;
   const password = formData.get("password") as string;
 
@@ -77,7 +77,11 @@ export async function loginAdmin(formData: FormData) {
   const cookieStore = await cookies();
   cookieStore.set("session", session, { expires, httpOnly: true });
 
-  redirect("/admin/dashboard");
+  const targetRedirect = redirectPath && redirectPath.startsWith("/") && !redirectPath.startsWith("//")
+    ? redirectPath
+    : "/admin/dashboard";
+
+  redirect(targetRedirect);
 }
 
 export async function logout() {

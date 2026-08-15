@@ -5,10 +5,17 @@ export const metadata = {
   title: "Admin Login - Sona IT Library",
 };
 
-export default function AdminLoginPage() {
+export default async function AdminLoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const resolvedSearchParams = await searchParams;
+  const redirectVal = typeof resolvedSearchParams?.redirect === "string" ? resolvedSearchParams.redirect : undefined;
+
   const loginAction = async (formData: FormData) => {
     "use server";
-    return await loginAdmin(formData);
+    return await loginAdmin(formData, redirectVal);
   };
 
   return (
