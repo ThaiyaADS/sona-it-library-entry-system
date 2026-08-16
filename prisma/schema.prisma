@@ -43,6 +43,7 @@ model LibraryVisit {
 model Admin {
   id              String       @id @default(uuid())
   username        String       @unique
+  name            String?
   email           String?
   passwordHash    String
   createdAt       DateTime     @default(now())

@@ -13,6 +13,7 @@ export async function createAdmin(data: any) {
 
   try {
     const username = data.username.toString().trim().toLowerCase();
+    const name = data.name ? data.name.toString().trim() : null;
     const email = data.email ? data.email.toString().trim() : null;
     const password = data.password.toString();
 
@@ -30,6 +31,7 @@ export async function createAdmin(data: any) {
     await prisma.admin.create({
       data: {
         username,
+        name,
         email,
         passwordHash
       }
@@ -51,10 +53,11 @@ export async function updateAdmin(id: string, data: any) {
 
   try {
     const username = data.username.toString().trim().toLowerCase();
+    const name = data.name ? data.name.toString().trim() : null;
     const email = data.email ? data.email.toString().trim() : null;
 
     // If password is provided, update hash
-    const updateData: any = { username, email };
+    const updateData: any = { username, name, email };
     if (data.password) {
       updateData.passwordHash = await bcrypt.hash(data.password.toString(), 10);
     }

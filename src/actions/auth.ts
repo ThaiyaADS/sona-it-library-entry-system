@@ -72,7 +72,7 @@ export async function loginAdmin(formData: FormData, redirectPath?: string) {
 
   // Create JWT
   const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
-  const session = await encrypt({ user: { id: admin.id, role: "ADMIN", name: admin.username }, expires });
+  const session = await encrypt({ user: { id: admin.id, role: "ADMIN", name: admin.name || admin.username }, expires });
 
   const cookieStore = await cookies();
   cookieStore.set("session", session, { expires, httpOnly: true });

@@ -75,6 +75,17 @@ export default function AdminFormModal({ mode, initialData }: AdminFormModalProp
         
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="grid gap-2">
+            <Label htmlFor="name">Full Name *</Label>
+            <Input 
+              id="name" 
+              name="name" 
+              defaultValue={initialData?.name} 
+              placeholder="e.g. Suresh Kumar"
+              required 
+            />
+          </div>
+
+          <div className="grid gap-2">
             <Label htmlFor="username">Username *</Label>
             <Input 
               id="username" 

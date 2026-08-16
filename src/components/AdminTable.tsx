@@ -23,6 +23,7 @@ export default function AdminTable({ initialAdmins }: AdminTableProps) {
     return initialAdmins.filter((admin) => {
       const matchesSearch = 
         admin.username.toLowerCase().includes(search.toLowerCase()) ||
+        (admin.name && admin.name.toLowerCase().includes(search.toLowerCase())) ||
         (admin.email && admin.email.toLowerCase().includes(search.toLowerCase()));
 
       return matchesSearch;
@@ -133,6 +134,7 @@ export default function AdminTable({ initialAdmins }: AdminTableProps) {
                     className="w-4 h-4 rounded border-slate-300 dark:border-white/10 text-blue-600 focus:ring-blue-500 accent-blue-500 cursor-pointer"
                   />
                 </th>
+                <th className="px-6 py-4">Name</th>
                 <th className="px-6 py-4">Username</th>
                 <th className="px-6 py-4">Email</th>
                 <th className="px-6 py-4 text-right">Actions</th>
@@ -149,7 +151,8 @@ export default function AdminTable({ initialAdmins }: AdminTableProps) {
                       className="w-4 h-4 rounded border-slate-300 dark:border-white/10 text-blue-600 focus:ring-blue-500 accent-blue-500 cursor-pointer"
                     />
                   </td>
-                  <td className="px-6 py-4 font-bold text-slate-900 dark:text-white font-mono">{admin.username}</td>
+                  <td className="px-6 py-4 font-bold text-slate-900 dark:text-white">{admin.name || "-"}</td>
+                  <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-450">{admin.username}</td>
                   <td className="px-6 py-4 text-slate-600 dark:text-slate-400">{admin.email || "-"}</td>
                   <td className="px-6 py-4 text-right flex justify-end gap-1 items-center">
                     <AdminFormModal mode="EDIT" initialData={admin} />
