@@ -121,14 +121,14 @@ export default function UserFormModal({ type, mode, initialData }: UserFormModal
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="email">Email *</Label>
+            <Label htmlFor="email">Email{isStudent ? "" : " *"}</Label>
             <Input 
               id="email" 
               name="email" 
               type="email"
               defaultValue={initialData?.email} 
               placeholder="e.g. name@sonacollege.org"
-              required
+              required={!isStudent}
             />
           </div>
 

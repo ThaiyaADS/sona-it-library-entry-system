@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     icon: [
       { url: "/icon.jpg", type: "image/jpeg" },
     ],
+    shortcut: "/icon.jpg",
     apple: [
       { url: "/icon.jpg", sizes: "180x180", type: "image/jpeg" },
     ],

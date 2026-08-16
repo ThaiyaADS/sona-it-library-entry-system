@@ -27,7 +27,8 @@ export default async function FacultyDashboard() {
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
             <Link href="/" className="transition-all duration-300 hover:scale-105 active:scale-95 block">
-              <Image src="/logo.png" alt="Sona College Logo" width={140} height={40} className="object-contain bg-white/10 p-1 rounded-md cursor-pointer" />
+              <Image src="/logo.png" alt="Sona College Logo" width={140} height={40} className="hidden sm:block object-contain bg-white/10 p-1 rounded-md cursor-pointer" />
+              <Image src="/icon.jpg" alt="Sona College Logo" width={36} height={36} className="block sm:hidden object-contain bg-white p-0.5 rounded-md cursor-pointer" />
             </Link>
             <div className="hidden sm:block border-l border-slate-700 pl-3">
               <h1 className="text-xl font-bold tracking-tight">IT Library</h1>
