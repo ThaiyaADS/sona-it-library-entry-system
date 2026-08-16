@@ -33,15 +33,7 @@ export default async function Home() {
                 alt="Sona College Logo" 
                 width={150} 
                 height={45} 
-                className="hidden sm:block object-contain bg-white/95 p-1.5 rounded-lg border border-slate-200 dark:border-white/10 shadow-sm cursor-pointer" 
-                priority
-              />
-              <Image 
-                src="/icon.jpg" 
-                alt="Sona College Logo" 
-                width={36} 
-                height={36} 
-                className="block sm:hidden object-contain bg-white/95 p-1 rounded-lg border border-slate-200 dark:border-white/10 shadow-sm cursor-pointer" 
+                className="object-contain bg-white/95 p-1.5 rounded-lg border border-slate-200 dark:border-white/10 shadow-sm cursor-pointer" 
                 priority
               />
             </Link>

@@ -17,7 +17,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <header className="md:hidden bg-slate-900 text-slate-100 flex items-center justify-between px-5 py-3.5 border-b border-slate-800 z-30 sticky top-0">
         <div className="flex items-center gap-3">
           <Link href="/" className="transition-all duration-300 hover:scale-105 active:scale-95 block w-fit">
-            <Image src="/icon.jpg" alt="Sona College Logo" width={34} height={34} className="object-contain bg-white p-0.5 rounded-md cursor-pointer" />
+            <Image src="/logo.png" alt="Sona College Logo" width={110} height={34} className="object-contain bg-white/10 p-1 rounded-md cursor-pointer" />
           </Link>
           <div className="border-l border-slate-800 pl-3">
             <h1 className="text-sm font-bold text-white tracking-tight leading-none">IT Library</h1>

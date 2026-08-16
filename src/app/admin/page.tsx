@@ -23,14 +23,7 @@ export default function AdminLandingPage() {
                 alt="Sona College Logo" 
                 width={160} 
                 height={50} 
-                className="hidden sm:block object-contain bg-white/95 p-1.5 rounded-md border border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer" 
-              />
-              <Image 
-                src="/icon.jpg" 
-                alt="Sona College Logo" 
-                width={36} 
-                height={36} 
-                className="block sm:hidden object-contain bg-white/95 p-1 rounded-md border border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer" 
+                className="object-contain bg-white/95 p-1.5 rounded-md border border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer" 
               />
             </Link>
             <div className="hidden sm:block border-l border-slate-200 dark:border-slate-800 pl-3">
