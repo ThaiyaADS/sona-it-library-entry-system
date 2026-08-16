@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { Users, Activity, LogIn, CheckCircle, Clock, Download, LogOut } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { getSession } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
 export const metadata = {
   title: "Admin Dashboard - Sona IT Library",
@@ -11,7 +12,16 @@ export const metadata = {
 
 export default async function AdminDashboard() {
   const session = await getSession();
-  const adminName = session?.user?.name || "Admin";
+  let adminName = "Admin";
+  if (session?.user?.id) {
+    const admin = await prisma.admin.findUnique({
+      where: { id: session.user.id },
+      select: { name: true, username: true }
+    });
+    if (admin) {
+      adminName = admin.name || admin.username;
+    }
+  }
   const { stats, liveUsers, hourlyStats } = await getAdminDashboardData();
 
   const formatDuration = (totalMins: number) => {

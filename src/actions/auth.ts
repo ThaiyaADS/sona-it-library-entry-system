@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { encrypt } from "@/lib/auth";
+import { encrypt, getSession } from "@/lib/auth";
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -88,4 +88,14 @@ export async function logout() {
   const cookieStore = await cookies();
   cookieStore.delete("session");
   redirect("/");
+}
+
+export async function getSessionUser() {
+  const session = await getSession();
+  if (!session?.user?.id) return null;
+  const admin = await prisma.admin.findUnique({
+    where: { id: session.user.id },
+    select: { name: true, username: true }
+  });
+  return admin ? { name: admin.name || admin.username } : null;
 }

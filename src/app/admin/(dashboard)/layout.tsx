@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { getSessionUser } from "@/actions/auth";
 import { Users, BookOpen, Clock, Activity, LogOut, FileText, Settings, LayoutDashboard, UserCheck, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -9,6 +10,15 @@ import ThemeToggle from "@/components/ThemeToggle";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [adminName, setAdminName] = useState<string>("Admin");
+
+  useEffect(() => {
+    getSessionUser().then((user) => {
+      if (user && user.name) {
+        setAdminName(user.name);
+      }
+    });
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 flex flex-col md:flex-row transition-colors duration-500">
@@ -56,6 +66,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </Link>
             <h2 className="text-xl font-bold text-white tracking-tight">IT Library</h2>
             <p className="text-xs text-slate-400 mt-1">Administration Portal</p>
+            <div className="mt-4 px-3 py-2 rounded-xl bg-slate-800/40 text-xs text-slate-300 border border-slate-850 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Welcome, <strong className="text-white">{adminName}</strong></span>
+            </div>
           </div>
           
           {/* Close button inside sidebar for accessibility (mobile only) */}
