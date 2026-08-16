@@ -160,9 +160,14 @@ export default async function Home() {
         </div>
 
         {/* Operating Hours Info */}
-        <div className="mt-12 text-slate-600 dark:text-slate-500 text-xs flex items-center gap-2 bg-slate-200/50 dark:bg-slate-900/20 px-4 py-2 border border-slate-300/50 dark:border-white/5 rounded-full animate-in fade-in duration-1000 delay-300">
-          <Clock className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
-          <span>Library Timings: <strong>8:00 AM - 8:00 PM</strong></span>
+        <div className="mt-12 text-slate-600 dark:text-slate-500 text-xs flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 bg-slate-200/50 dark:bg-slate-900/20 px-5 py-2.5 border border-slate-300/50 dark:border-white/5 rounded-2xl max-w-xl mx-auto text-center animate-in fade-in duration-1000 delay-300">
+          <div className="flex items-center gap-1.5 justify-center">
+            <Clock className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+            <span className="font-semibold">Library Hours:</span>
+          </div>
+          <span>Lunch: <strong>12:55 PM - 1:55 PM</strong></span>
+          <span className="hidden sm:inline text-slate-400">&bull;</span>
+          <span>Evening: <strong>4:50 PM - 5:30 PM</strong></span>
         </div>
 
       </main>
