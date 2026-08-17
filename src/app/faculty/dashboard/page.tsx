@@ -62,7 +62,7 @@ export default async function FacultyDashboard() {
            </Card>
 
             {/* Stats Cards */}
-            <Card className="shadow-sm border-slate-200 bg-white dark:bg-slate-900/60 dark:border-white/10 text-slate-850 dark:text-slate-100">
+            <Card className="shadow-sm border-slate-200 bg-white dark:bg-slate-900/60 dark:border-white/10 text-slate-800 dark:text-slate-100">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-slate-500 dark:text-slate-400 flex items-center">
                   <Book className="w-4 h-4 mr-2 text-blue-500" /> Total Visits
@@ -73,7 +73,7 @@ export default async function FacultyDashboard() {
               </CardContent>
             </Card>
 
-            <Card className="shadow-sm border-slate-200 bg-white dark:bg-slate-900/60 dark:border-white/10 text-slate-850 dark:text-slate-100">
+            <Card className="shadow-sm border-slate-200 bg-white dark:bg-slate-900/60 dark:border-white/10 text-slate-800 dark:text-slate-100">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-slate-500 dark:text-slate-400 flex items-center">
                   <Clock className="w-4 h-4 mr-2 text-indigo-500" /> Avg Session Time
@@ -84,7 +84,7 @@ export default async function FacultyDashboard() {
               </CardContent>
             </Card>
 
-            <Card className="shadow-sm border-slate-200 bg-white dark:bg-slate-900/60 dark:border-white/10 text-slate-850 dark:text-slate-100">
+            <Card className="shadow-sm border-slate-200 bg-white dark:bg-slate-900/60 dark:border-white/10 text-slate-800 dark:text-slate-100">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-slate-500 dark:text-slate-400 flex items-center">
                   <Clock className="w-4 h-4 mr-2 text-orange-400" /> Total Time
@@ -95,7 +95,7 @@ export default async function FacultyDashboard() {
               </CardContent>
             </Card>
 
-            <Card className="shadow-sm border-slate-200 bg-white dark:bg-slate-900/60 dark:border-white/10 text-slate-850 dark:text-slate-100">
+            <Card className="shadow-sm border-slate-200 bg-white dark:bg-slate-900/60 dark:border-white/10 text-slate-800 dark:text-slate-100">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-slate-500 dark:text-slate-400 flex items-center">
                   <Activity className="w-4 h-4 mr-2 text-emerald-500" /> Weekly Streak

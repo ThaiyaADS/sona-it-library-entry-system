@@ -180,7 +180,7 @@ export default async function AdminDashboard() {
                     style={{ height: `${heightPercent}%` }}
                   />
                   {/* Label */}
-                  <span className="text-[9px] font-mono text-slate-450 mt-2 truncate w-full text-center">
+                  <span className="text-[9px] font-mono text-slate-400 mt-2 truncate w-full text-center">
                     {item.label}
                   </span>
                 </div>
@@ -215,7 +215,7 @@ export default async function AdminDashboard() {
                          </Badge>
                        </td>
                        <td className="px-6 py-4 font-medium text-slate-900 dark:text-white">{visit.user.name}</td>
-                       <td className="px-6 py-4 font-mono text-slate-650 dark:text-slate-400">{visit.user.identifier}</td>
+                       <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">{visit.user.identifier}</td>
                        <td className="px-6 py-4 text-slate-600 dark:text-slate-300">
                           {visit.user.department}
                           <div className="text-xs text-slate-400 dark:text-slate-500">{visit.user.designation || visit.user.course}</div>

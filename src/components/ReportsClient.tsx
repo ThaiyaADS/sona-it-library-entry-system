@@ -214,7 +214,7 @@ export default function ReportsClient({ initialVisits, initialStats, departments
               <Button 
                 onClick={handleResetFilters} 
                 variant="outline" 
-                className="border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-slate-850 dark:hover:text-white text-slate-700 h-10 px-3"
+                className="border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-slate-800 dark:hover:text-white text-slate-700 h-10 px-3"
                 disabled={isPending}
                 title="Reset Filters"
               >
@@ -227,7 +227,7 @@ export default function ReportsClient({ initialVisits, initialStats, departments
 
       {/* Aggregate Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Card className="shadow-sm border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 text-slate-850 dark:text-slate-100">
+        <Card className="shadow-sm border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 text-slate-800 dark:text-slate-100">
           <CardHeader className="pb-2 flex flex-row items-center justify-between">
             <CardTitle className="text-sm font-medium text-slate-500 dark:text-slate-400">Filtered Visits</CardTitle>
             <BookOpen className="w-4 h-4 text-slate-400" />
@@ -238,7 +238,7 @@ export default function ReportsClient({ initialVisits, initialStats, departments
           </CardContent>
         </Card>
 
-        <Card className="shadow-sm border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 text-slate-850 dark:text-slate-100">
+        <Card className="shadow-sm border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 text-slate-800 dark:text-slate-100">
           <CardHeader className="pb-2 flex flex-row items-center justify-between">
             <CardTitle className="text-sm font-medium text-slate-500 dark:text-slate-400">Avg Session Duration</CardTitle>
             <Clock className="w-4 h-4 text-slate-400" />
@@ -249,7 +249,7 @@ export default function ReportsClient({ initialVisits, initialStats, departments
           </CardContent>
         </Card>
 
-        <Card className="shadow-sm border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 text-slate-850 dark:text-slate-100">
+        <Card className="shadow-sm border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 text-slate-800 dark:text-slate-100">
           <CardHeader className="pb-2 flex flex-row items-center justify-between">
             <CardTitle className="text-sm font-medium text-slate-500 dark:text-slate-400">Accumulated Study Time</CardTitle>
             <Clock className="w-4 h-4 text-slate-400" />
@@ -262,7 +262,7 @@ export default function ReportsClient({ initialVisits, initialStats, departments
       </div>
 
       {/* Visits Log Table */}
-      <Card className="shadow-sm border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 text-slate-855 dark:text-slate-100 overflow-hidden">
+      <Card className="shadow-sm border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 text-slate-800 dark:text-slate-100 overflow-hidden">
         <CardHeader className="border-b border-slate-100 dark:border-white/5 flex flex-row justify-between items-center bg-slate-50/50 dark:bg-slate-900/25 py-4 px-6">
           <CardTitle className="text-lg text-slate-800 dark:text-slate-200 flex items-center gap-2">
             <Activity className="w-4 h-4 text-blue-500" /> Filtered Logs

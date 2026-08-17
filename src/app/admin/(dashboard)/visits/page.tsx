@@ -73,7 +73,7 @@ export default async function AdminVisits() {
                        <td className="px-6 py-4 font-mono text-slate-600 dark:text-slate-400">
                           {visit.exitTime ? format(new Date(visit.exitTime), "hh:mm a") : "-"}
                        </td>
-                       <td className="px-6 py-4 font-mono font-bold text-slate-800 dark:text-slate-350">
+                       <td className="px-6 py-4 font-mono font-bold text-slate-800 dark:text-slate-300">
                           {formatDuration(visit.durationMinutes)}
                        </td>
                        <td className="px-6 py-4">

@@ -136,7 +136,7 @@ export default function LiveMonitoringClient({ initialLiveUsers }: { initialLive
                   <tr>
                     <td colSpan={6} className="px-6 py-16 text-center text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900/10">
                       <Activity className="w-12 h-12 text-slate-200 mx-auto mb-4" />
-                      <p className="text-base font-bold text-slate-700 dark:text-slate-350">No matching logs</p>
+                      <p className="text-base font-bold text-slate-700 dark:text-slate-300">No matching logs</p>
                       <p className="text-sm text-slate-400 mt-1">No active members found matching your search.</p>
                     </td>
                   </tr>

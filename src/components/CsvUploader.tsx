@@ -183,11 +183,11 @@ export default function CsvUploader({ type }: CsvUploaderProps) {
           <div className="flex items-center justify-center w-full">
             <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-lg cursor-pointer bg-slate-50 hover:bg-slate-100 dark:bg-slate-950 dark:hover:bg-slate-900/50 dark:border-white/10">
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                <FileUp className="w-8 h-8 mb-2 text-slate-500" />
-                <p className="mb-2 text-sm text-slate-500 font-medium">
+                <FileUp className="w-8 h-8 mb-2 text-slate-500 dark:text-slate-400" />
+                <p className="mb-2 text-sm text-slate-500 dark:text-slate-300 font-medium">
                   {file ? file.name : "Click to upload or drag and drop"}
                 </p>
-                <p className="text-xs text-slate-400">CSV, PDF, or Word (.docx) files only</p>
+                <p className="text-xs text-slate-400 dark:text-slate-500">CSV, PDF, or Word (.docx) files only</p>
               </div>
               <input id="dropzone-file" type="file" accept=".csv,.pdf,.docx,.doc" className="hidden" onChange={handleFileChange} />
             </label>

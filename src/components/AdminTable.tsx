@@ -152,7 +152,7 @@ export default function AdminTable({ initialAdmins }: AdminTableProps) {
                     />
                   </td>
                   <td className="px-6 py-4 font-bold text-slate-900 dark:text-white">{admin.name || "-"}</td>
-                  <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-450">{admin.username}</td>
+                  <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">{admin.username}</td>
                   <td className="px-6 py-4 text-slate-600 dark:text-slate-400">{admin.email || "-"}</td>
                   <td className="px-6 py-4 text-right flex justify-end gap-1 items-center">
                     <AdminFormModal mode="EDIT" initialData={admin} />

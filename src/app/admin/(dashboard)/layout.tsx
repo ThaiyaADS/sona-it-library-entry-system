@@ -1,40 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Users, BookOpen, Clock, Activity, LogOut, FileText, Settings, LayoutDashboard, UserCheck, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import ThemeToggle from "@/components/ThemeToggle";
+import { getSessionUser } from "@/actions/auth";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [adminName, setAdminName] = useState<string>("");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const user = await getSessionUser();
+        if (user?.name) {
+          setAdminName(user.name);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchUser();
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 flex flex-col md:flex-row transition-colors duration-500">
       
-      {/* Mobile Top Navbar Header (visible only on mobile/tablet) */}
-      <header className="md:hidden bg-slate-900 text-slate-100 flex items-center justify-between px-5 py-3.5 border-b border-slate-800 z-30 sticky top-0">
-        <div className="flex items-center gap-3">
-          <Link href="/" className="transition-all duration-300 hover:scale-105 active:scale-95 block w-fit">
-            <Image src="/logo.png" alt="Sona College Logo" width={110} height={34} className="object-contain bg-white/10 p-1 rounded-md cursor-pointer" />
-          </Link>
-          <div className="border-l border-slate-800 pl-3">
-            <h1 className="text-sm font-bold text-white tracking-tight leading-none">IT Library</h1>
-            <p className="text-[10px] text-slate-400 mt-0.5">Admin Portal</p>
-          </div>
-        </div>
-        
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          onClick={() => setIsOpen(!isOpen)} 
-          className="text-slate-300 hover:text-white hover:bg-slate-800 cursor-pointer h-9 w-9 rounded-lg"
-        >
-          {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </Button>
-      </header>
-
       {/* Backdrop overlay for mobile drawer menu */}
       {isOpen && (
         <div 
@@ -92,23 +86,55 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <FileText className="w-5 h-5" /> Reports
           </Link>
         </nav>
-
-        <div className="p-4 mt-auto border-t border-slate-800 flex flex-col gap-3 shrink-0">
-          <div className="flex items-center justify-between px-3">
-            <span className="text-xs font-semibold text-slate-400">Toggle Theme</span>
-            <ThemeToggle />
-          </div>
-          <form action="/api/auth/logout" method="POST">
-             <Button type="submit" variant="ghost" className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800 cursor-pointer">
-               <LogOut className="w-5 h-5 mr-3" /> Logout
-             </Button>
-          </form>
-        </div>
       </aside>
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-h-screen overflow-x-hidden">
-        {children}
+        {/* Global Top Header Bar with action buttons */}
+        <header className="bg-white/80 dark:bg-slate-900/60 backdrop-blur-md border-b border-slate-200 dark:border-white/10 px-6 py-4 flex items-center justify-between sticky top-0 z-20 transition-colors duration-500">
+          <div className="flex items-center gap-3">
+            {/* Mobile Menu Toggle Button */}
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => setIsOpen(!isOpen)} 
+              className="md:hidden text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800 cursor-pointer h-9 w-9 rounded-lg"
+            >
+              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </Button>
+            <div className="hidden md:flex items-center gap-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Sona IT Library Admin Console</span>
+            </div>
+            <div className="md:hidden flex items-center gap-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Admin Portal</span>
+            </div>
+          </div>
+
+          {/* Action buttons on the right corner */}
+          <div className="flex items-center gap-4">
+            {adminName && (
+              <span className="text-xs font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/60 px-3.5 py-1.5 rounded-full border border-slate-200/50 dark:border-white/5 animate-in fade-in slide-in-from-right duration-300">
+                Welcome, <span className="text-blue-600 dark:text-blue-400 font-extrabold">{adminName}</span>
+              </span>
+            )}
+            <ThemeToggle />
+            <form action="/api/auth/logout" method="POST" className="flex items-center">
+              <Button 
+                type="submit" 
+                variant="ghost" 
+                size="icon"
+                className="text-slate-500 hover:text-red-600 hover:bg-red-50 dark:text-slate-400 dark:hover:text-red-400 dark:hover:bg-red-950/30 rounded-xl cursor-pointer h-9.5 w-9.5"
+                title="Logout"
+              >
+                <LogOut className="w-5 h-5" />
+              </Button>
+            </form>
+          </div>
+        </header>
+
+        <div className="flex-1">
+          {children}
+        </div>
       </main>
     </div>
   );
