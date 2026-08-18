@@ -7,45 +7,45 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id              String         @id @default(uuid())
-  role            String         // STUDENT, FACULTY, ADMIN
-  identifier      String         @unique // Admission Number or Faculty ID
-  name            String
-  department      String
-  course          String?        // B.Tech, M.Tech (Students only)
-  registerNumber  String?        // Register Number (Students only)
-  year            String?        // I, II, III, IV (Students only)
-  section         String?        // A, B, C (Students only)
-  designation     String?        // Assistant Professor, etc. (Faculty only)
-  email           String?
-  phone           String?
-  barcode         String         @unique
-  passwordHash    String
-  isActive        Boolean        @default(true)
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  visits          LibraryVisit[]
+model Admin {
+  id           String   @id
+  username     String   @unique
+  email        String?
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime
+  name         String?
 }
 
 model LibraryVisit {
-  id              String       @id @default(uuid())
+  id              String    @id
   userId          String
-  user            User         @relation(fields: [userId], references: [id])
-  entryTime       DateTime     @default(now())
+  entryTime       DateTime  @default(now())
   exitTime        DateTime?
   durationMinutes Int?
-  status          String       @default("INSIDE") // INSIDE, COMPLETED
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
+  status          String    @default("INSIDE")
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime
+  User            User      @relation(fields: [userId], references: [id])
 }
 
-model Admin {
-  id              String       @id @default(uuid())
-  username        String       @unique
-  name            String?
-  email           String?
-  passwordHash    String
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
+model User {
+  id             String         @id
+  role           String
+  identifier     String         @unique
+  name           String
+  department     String
+  course         String?
+  year           String?
+  section        String?
+  designation    String?
+  email          String?
+  phone          String?
+  barcode        String         @unique
+  passwordHash   String
+  isActive       Boolean        @default(true)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime
+  registerNumber String?
+  LibraryVisit   LibraryVisit[]
 }
