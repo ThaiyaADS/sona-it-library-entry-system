@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { format } from "date-fns";
+import { formatInIST, calculateISTDurationMinutes } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -94,14 +94,14 @@ export default function ReportsClient({ initialVisits, initialStats, departments
     
     // Rows
     const rows = visits.map((visit) => [
-      format(new Date(visit.entryTime), "yyyy-MM-dd"),
+      formatInIST(visit.entryTime, "isoDate"),
       visit.user.role,
       visit.user.name,
       `="${visit.user.identifier}"`, // force string type in excel
       visit.user.department,
-      format(new Date(visit.entryTime), "hh:mm a"),
-      visit.exitTime ? format(new Date(visit.exitTime), "hh:mm a") : "-",
-      visit.durationMinutes || 0,
+      formatInIST(visit.entryTime, "time"),
+      visit.exitTime ? formatInIST(visit.exitTime, "time") : "-",
+      visit.exitTime ? calculateISTDurationMinutes(visit.entryTime, visit.exitTime) : 0,
       visit.status
     ]);
 
@@ -113,7 +113,7 @@ export default function ReportsClient({ initialVisits, initialStats, departments
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `library_report_${format(new Date(), "yyyyMMdd")}.csv`);
+    link.setAttribute("download", `library_report_${formatInIST(new Date(), "filenameDate")}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -287,7 +287,7 @@ export default function ReportsClient({ initialVisits, initialStats, departments
               {visits.map((visit) => (
                 <tr key={visit.id} className="border-b dark:border-white/5 hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors">
                   <td className="px-6 py-4 font-medium text-slate-900 dark:text-white">
-                    {format(new Date(visit.entryTime), "MMM dd, yyyy")}
+                    {formatInIST(visit.entryTime, "date")}
                   </td>
                   <td className="px-6 py-4">
                     <Badge variant={visit.user.role === 'FACULTY' ? 'secondary' : 'default'} className="text-[10px]">
@@ -300,13 +300,13 @@ export default function ReportsClient({ initialVisits, initialStats, departments
                   </td>
                   <td className="px-6 py-4 font-mono text-slate-600 dark:text-slate-400">{visit.user.identifier}</td>
                   <td className="px-6 py-4 font-mono text-slate-600 dark:text-slate-400">
-                    {format(new Date(visit.entryTime), "hh:mm a")}
+                    {formatInIST(visit.entryTime, "time")}
                   </td>
                   <td className="px-6 py-4 font-mono text-slate-600 dark:text-slate-400">
-                    {visit.exitTime ? format(new Date(visit.exitTime), "hh:mm a") : "-"}
+                    {visit.exitTime ? formatInIST(visit.exitTime, "time") : "-"}
                   </td>
                   <td className="px-6 py-4 font-mono font-bold text-slate-800 dark:text-slate-300">
-                    {formatDuration(visit.durationMinutes)}
+                    {visit.exitTime ? formatDuration(calculateISTDurationMinutes(visit.entryTime, visit.exitTime)) : "-"}
                   </td>
                   <td className="px-6 py-4">
                     <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${

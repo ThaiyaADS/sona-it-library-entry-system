@@ -1,10 +1,11 @@
 import { getAdminDashboardData } from "@/actions/dashboard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { format } from "date-fns";
-import { Users, Activity, LogIn, CheckCircle, Clock, Download, LogOut } from "lucide-react";
+import Link from "next/link";
+import { Users, Activity, LogIn, CheckCircle, Clock, Download, LogOut, Scan } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { formatInIST } from "@/lib/utils";
 
 export const metadata = {
   title: "Admin Dashboard - Sona IT Library",
@@ -52,8 +53,16 @@ export default async function AdminDashboard() {
           >
              <Download className="w-3.5 h-3.5" /> Export Today
           </a>
+          {/* Quick Scanner launch button */}
+          <Link 
+            href="/admin/scanner" 
+            className="flex items-center gap-1.5 bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-md shadow-amber-500/10 cursor-pointer transition-all"
+            title="Open Barcode Scanner Gate interface"
+          >
+             <Scan className="w-3.5 h-3.5" /> Barcode Scanner
+          </Link>
           <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 px-4 py-2 rounded-xl shadow-xs font-mono text-xs text-slate-500 dark:text-slate-400">
-            {format(new Date(), "EEEE, MMM do")}
+            {formatInIST(new Date(), "weekdayDate")}
           </div>
           <form action="/api/auth/logout" method="POST">
              <button 
@@ -221,7 +230,7 @@ export default async function AdminDashboard() {
                           <div className="text-xs text-slate-400 dark:text-slate-500">{visit.user.designation || visit.user.course}</div>
                        </td>
                        <td className="px-6 py-4 font-mono text-slate-600 dark:text-slate-400">
-                          {format(new Date(visit.entryTime), "hh:mm a")}
+                          {formatInIST(visit.entryTime, "time")}
                        </td>
                        <td className="px-6 py-4">
                           <span className="px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 flex items-center w-fit">

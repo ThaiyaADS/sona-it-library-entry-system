@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useTheme } from "next-themes";
-import { processScan, ScanResult } from "@/actions/scanner";
+import { processScan, ScanResult, getScannerUpdateData } from "@/actions/scanner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -114,10 +114,12 @@ const playSound = async (type: "ENTRY" | "EXIT" | "WARNING") => {
 
 export default function ScannerInterface({ 
   initialScans, 
-  initialActiveCount 
+  initialActiveCount,
+  isEmbedded = false
 }: { 
   initialScans: any[]; 
   initialActiveCount: number; 
+  isEmbedded?: boolean;
 }) {
   const [barcode, setBarcode] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -140,6 +142,29 @@ export default function ScannerInterface({
       clearInterval(timer);
     };
   }, []);
+
+  // Auto-refresh scanner data every 5 seconds
+  useEffect(() => {
+    let active = true;
+    const interval = setInterval(async () => {
+      if (isProcessing) return; // skip if busy processing a local scan
+      
+      try {
+        const data = await getScannerUpdateData();
+        if (active) {
+          setRecentScans(data.recentScans);
+          setActiveCount(data.activeCount);
+        }
+      } catch (err) {
+        console.error("Error auto-refreshing scanner data:", err);
+      }
+    }, 5000); // Poll every 5 seconds
+
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
+  }, [isProcessing]);
 
   // Pre-initialize/resume AudioContext on first user click/keypress to bypass autoplay restrictions
   useEffect(() => {
@@ -237,7 +262,7 @@ export default function ScannerInterface({
 
 
   return (
-    <div className={`min-h-screen flex flex-col justify-between relative overflow-hidden py-8 px-4 transition-colors duration-500 ${
+    <div className={`${isEmbedded ? 'w-full py-4' : 'min-h-screen py-8 px-4'} flex flex-col justify-between relative overflow-hidden transition-colors duration-500 ${
       isDark ? "dark bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-800"
     }`}>
       {/* Background Decorative Glows */}
@@ -250,16 +275,20 @@ export default function ScannerInterface({
 
       {/* Top Navigation & Controls */}
       <div className="max-w-6xl w-full mx-auto flex justify-between items-center z-10 mb-6">
-        <Link 
-          href="/admin" 
-          className={`text-xs flex items-center gap-1.5 font-bold transition-all border py-2 px-4 rounded-xl shadow-sm ${
-            isDark 
-              ? "bg-slate-900/60 border-white/5 text-slate-300 hover:text-white" 
-              : "bg-white border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-          }`}
-        >
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to Admin
-        </Link>
+        {!isEmbedded ? (
+          <Link 
+            href="/admin" 
+            className={`text-xs flex items-center gap-1.5 font-bold transition-all border py-2 px-4 rounded-xl shadow-sm ${
+              isDark 
+                ? "bg-slate-900/60 border-white/5 text-slate-300 hover:text-white" 
+                : "bg-white border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+            }`}
+          >
+            <ArrowLeft className="w-3.5 h-3.5" /> Back to Admin
+          </Link>
+        ) : (
+          <div />
+        )}
         
         <div className="flex items-center gap-3">
           {/* Animated Theme Toggle Button */}

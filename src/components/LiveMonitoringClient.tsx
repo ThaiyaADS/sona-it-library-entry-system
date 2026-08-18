@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { format } from "date-fns";
 import { Activity, Search, RefreshCw, Radio } from "lucide-react";
+import { formatInIST } from "@/lib/utils";
 
 export default function LiveMonitoringClient({ initialLiveUsers }: { initialLiveUsers: any[] }) {
   const [liveUsers, setLiveUsers] = useState<any[]>(initialLiveUsers);
@@ -59,7 +59,7 @@ export default function LiveMonitoringClient({ initialLiveUsers }: { initialLive
             Auto-refreshing gate tracker
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
             <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500">
-              (Last update: {format(lastUpdated, "hh:mm:ss a")})
+              (Last update: {formatInIST(lastUpdated, "timeWithSeconds")})
             </span>
           </p>
         </div>
@@ -122,7 +122,7 @@ export default function LiveMonitoringClient({ initialLiveUsers }: { initialLive
                       )}
                     </td>
                     <td className="px-6 py-4 font-mono text-slate-700 dark:text-slate-400 text-xs">
-                      {format(new Date(visit.entryTime), "hh:mm:ss a")}
+                      {formatInIST(visit.entryTime, "timeWithSeconds")}
                     </td>
                     <td className="px-6 py-4 text-right">
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200/50 dark:bg-emerald-950/30 dark:text-emerald-400 dark:border-emerald-500/20">

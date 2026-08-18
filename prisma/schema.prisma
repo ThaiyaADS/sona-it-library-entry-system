@@ -26,7 +26,7 @@ model LibraryVisit {
   status          String    @default("INSIDE")
   createdAt       DateTime  @default(now())
   updatedAt       DateTime
-  User            User      @relation(fields: [userId], references: [id])
+  user            User      @relation(fields: [userId], references: [id])
 }
 
 model User {
@@ -47,5 +47,5 @@ model User {
   createdAt      DateTime       @default(now())
   updatedAt      DateTime
   registerNumber String?
-  LibraryVisit   LibraryVisit[]
+  visits         LibraryVisit[]
 }

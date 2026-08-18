@@ -84,7 +84,12 @@ export async function processScan(barcode: string): Promise<ScanResult> {
          };
       }
 
-      const durationMinutes = differenceInMinutes(now, activeVisit.entryTime);
+      // Calculate duration based on IST-rounded minutes
+      const entryIST = new Date(activeVisit.entryTime.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+      const exitIST = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+      entryIST.setSeconds(0, 0);
+      exitIST.setSeconds(0, 0);
+      const durationMinutes = Math.max(0, Math.round((exitIST.getTime() - entryIST.getTime()) / (1000 * 60)));
       
       const hours = Math.floor(durationMinutes / 60);
       const minutes = durationMinutes % 60;
@@ -197,4 +202,34 @@ export async function getRecentScans() {
   });
 
   return recentVisits;
+}
+
+export async function getScannerUpdateData() {
+  const session = await getSession();
+  if (!session || session.user.role !== "ADMIN") {
+    return { recentScans: [], activeCount: 0 };
+  }
+
+  const recentScans = await prisma.libraryVisit.findMany({
+    take: 10,
+    orderBy: {
+      updatedAt: "desc",
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+          identifier: true,
+          department: true,
+          role: true,
+        },
+      },
+    },
+  });
+
+  const activeCount = await prisma.libraryVisit.count({
+    where: { exitTime: null }
+  });
+
+  return { recentScans, activeCount };
 }
