@@ -7,13 +7,28 @@ export const metadata = {
   title: "Reports & Analytics - Sona IT Library",
 };
 
-export default async function AdminReportsPage() {
+export default async function AdminReportsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    startDate?: string;
+    endDate?: string;
+    role?: string;
+    department?: string;
+  }>;
+}) {
   const session = await getSession();
   if (!session || session.user.role !== "ADMIN") {
     redirect("/admin/login");
   }
 
-  const reportsRes = await getReportsData({});
+  const resolvedParams = await searchParams;
+  const reportsRes = await getReportsData({
+    startDate: resolvedParams.startDate,
+    endDate: resolvedParams.endDate,
+    role: resolvedParams.role,
+    department: resolvedParams.department,
+  });
   
   if (!reportsRes.success) {
     return (
