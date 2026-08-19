@@ -2,14 +2,10 @@
 
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
+import { getISTStartOfDay, getISTStartOfWeek, getISTHour } from "@/lib/utils";
 
 const getStartOfWeek = () => {
-  const today = new Date();
-  const day = today.getDay(); // 0 is Sunday, 1 is Monday, etc.
-  const diff = today.getDate() - day + (day === 0 ? -6 : 1);
-  const monday = new Date(today.setDate(diff));
-  monday.setHours(0, 0, 0, 0);
-  return monday;
+  return getISTStartOfWeek();
 };
 
 export async function getStudentDashboardData() {
@@ -148,8 +144,7 @@ export async function getAdminDashboardData() {
     throw new Error("Unauthorized");
   }
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = getISTStartOfDay();
 
   const totalStudents = await prisma.user.count({ where: { role: "STUDENT" } });
   const totalFaculty = await prisma.user.count({ where: { role: "FACULTY" } });
@@ -198,7 +193,7 @@ export async function getAdminDashboardData() {
   const hourlyStats = Array.from({ length: 12 }, (_, i) => {
      const hour = i + 8; // 8 AM to 7 PM
      const count = visitsToday.filter(v => {
-        const entryHour = new Date(v.entryTime).getHours();
+        const entryHour = getISTHour(new Date(v.entryTime));
         return entryHour === hour;
      }).length;
      const displayHour = hour > 12 ? `${hour - 12} PM` : hour === 12 ? "12 PM" : `${hour} AM`;
@@ -221,8 +216,7 @@ export async function getAdminDashboardData() {
 
 export async function getPublicLibraryStats() {
   try {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const today = getISTStartOfDay();
 
     const activeOccupants = await prisma.libraryVisit.count({
       where: { exitTime: null }

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
-import { format } from "date-fns";
+import { getISTStartOfDay, formatInIST } from "@/lib/utils";
 
 export async function GET() {
   const session = await getSession();
@@ -10,8 +10,7 @@ export async function GET() {
   }
 
   try {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const today = getISTStartOfDay();
 
     const visits = await prisma.libraryVisit.findMany({
       where: { entryTime: { gte: today } },
@@ -31,8 +30,8 @@ export async function GET() {
     // Create CSV content
     const headers = "Name,Identifier,Role,Department,Entry Time,Exit Time,Duration (Mins),Status\n";
     const rows = visits.map(v => {
-      const entryStr = v.entryTime ? format(new Date(v.entryTime), "hh:mm:ss a") : "";
-      const exitStr = v.exitTime ? format(new Date(v.exitTime), "hh:mm:ss a") : "";
+      const entryStr = v.entryTime ? formatInIST(v.entryTime, "timeWithSeconds") : "";
+      const exitStr = v.exitTime ? formatInIST(v.exitTime, "timeWithSeconds") : "";
       const duration = v.durationMinutes || "";
       // Clean quotes
       const cleanName = v.user.name.replace(/"/g, '""');
@@ -45,7 +44,7 @@ export async function GET() {
     const response = new NextResponse(csvContent, {
       headers: {
         "Content-Type": "text/csv; charset=utf-8",
-        "Content-Disposition": `attachment; filename=library_visits_today_${format(new Date(), "yyyy-MM-dd")}.csv`,
+        "Content-Disposition": `attachment; filename=library_visits_today_${formatInIST(new Date(), "isoDate")}.csv`,
       }
     });
 
